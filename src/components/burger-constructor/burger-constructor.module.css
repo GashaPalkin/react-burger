@@ -1,0 +1,23 @@
+.elementLocked {
+    width: 508px;
+    align-self: end;
+    margin-right: 25px;
+}
+
+.contstructorCenter {
+  overflow-y: scroll;
+}
+
+.checkout{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;  
+}
+
+.total {
+  display: flex;
+  align-items: center; 
+  gap:9px;
+  margin-right: 40px;
+}
