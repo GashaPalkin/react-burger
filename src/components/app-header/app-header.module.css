@@ -4,16 +4,16 @@
 }
 
 .header {
-  display: flex; 
-  justify-content: center;    
- 
+  display: flex;
+  justify-content: center;
+
 }
 
 .leftNavigation {
   flex: 1;
   display: flex;
   justify-content: flex-start;
-  align-items: center; 
+  align-items: center;
 }
 
 .logo {
@@ -34,8 +34,9 @@
 header span {
   display: flex;
   gap: 8px;
-  align-items: center;;
+  align-items: center;
+  ;
   margin-right: 16px;
   padding-top: 2px;
-  padding-bottom: 4px;  
+  padding-bottom: 4px;
 }

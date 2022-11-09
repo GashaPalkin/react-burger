@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { ingredientType } from "../../utils/types";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import {
   CurrencyIcon,
@@ -13,30 +14,24 @@ const IngredientElement = ({ element }) => (
     <Counter count={1} size="default" />
     <img className="centerBlock" src={element.image} alt={element.name} />
     <div className={`${ingredientsStyles.itemInfo} `}>
-      <span className={`${ingredientsStyles.itemPrice} text text_type_digits-default `}>
+      <span
+        className={`${ingredientsStyles.itemPrice} text text_type_digits-default `}
+      >
         {element.price} <CurrencyIcon type="primary" />
       </span>
-      <p className={`${ingredientsStyles.itemTitle} text text_type_main-default `}>{element.name}</p>
+      <p
+        className={`${ingredientsStyles.itemTitle} text text_type_main-default `}
+      >
+        {element.name}
+      </p>
     </div>
   </div>
 );
-const burgerIngredientsPropTypes = PropTypes.shape({
-  // number? в Data.js - string
-  _id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-});
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
-};
-
-function BurgerIngredients({ data }) {  
-  const [current, setCurrent] = React.useState("one");
+function BurgerIngredients({ data }) {
+  const [current, setCurrent] = React.useState("Булки");
   return (
-    <>
+    <React.Fragment>
       {/* Tabs */}
       <div className={`${ingredientsStyles.ingredientsTabs} `}>
         <Tab value="Булки" active={current === "Булки"} onClick={setCurrent}>
@@ -56,7 +51,9 @@ function BurgerIngredients({ data }) {
       {/* End Tabs */}
 
       <div className={`${ingredientsStyles.ingredientCards} `}>
-        <h3 className={`${ingredientsStyles.typeTitle} text text_type_main-medium mt-10 mb-6`}>
+        <h3
+          className={`${ingredientsStyles.typeTitle} text text_type_main-medium mt-10 mb-6`}
+        >
           Булки
         </h3>
         {data.map((element) => {
@@ -87,8 +84,17 @@ function BurgerIngredients({ data }) {
           }
         })}
       </div>
-    </>
+    </React.Fragment>
   );
 }
+
+// Типизация компонентов
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired,
+};
+
+IngredientElement.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape(ingredientType)),
+};
 
 export default BurgerIngredients;

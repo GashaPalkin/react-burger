@@ -56,19 +56,14 @@
 .contentWrap {
   display: flex;
   gap: 40px;
-  margin: 0 auto;
-  height: 100vh;
+  margin: 0 auto; 
 }
 
 .burgerIngredients {
   height: 100vh;
   display: flex;
   flex-wrap: wrap;
-  max-width: 50%;
-  /* justify-content: center; */
-  /* gap: 4px; */
-  /* padding: 4px; */
-  /* margin-bottom: 40px; */
+  max-width: 50%; 
 }
 
 .burgerConstructor {
@@ -76,8 +71,7 @@
   display: flex;
   flex-grow: 1;
   flex-wrap: wrap;
-  max-width: 50%;
-  /* margin-bottom: 40px; */
+  max-width: 50%; 
 }
 
 
