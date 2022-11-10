@@ -1,15 +1,23 @@
 import React from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { ingredientType } from "../../utils/types";
 import constructorStyles from "./burger-constructor.module.css";
+import imageDone from "../../images/done.png";
 import {
   ConstructorElement,
   Button,
   CurrencyIcon,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../modal/modal";
 
 function BurgerConstructor({ data }) {
+  // Для Modal
+  const [isShow, setShow] = useState(false);
+  function openOrder() {
+    setShow(true);
+  }
   return (
     <div className={`${constructorStyles.burgerConstructorWrap} pl-4 pr-4 `}>
       <ConstructorElement
@@ -20,9 +28,9 @@ function BurgerConstructor({ data }) {
         thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
       />
       <div className={`${constructorStyles.contstructorCenter} `}>
-        {/* Перебираем весь массив */}
+        {/* Перебор массива */}
         {data.map((element, idx) => {
-          // Условие что не булка
+          // Условие - не булка
           if (element.type !== "bun") {
             return (
               <div
@@ -59,10 +67,38 @@ function BurgerConstructor({ data }) {
             <CurrencyIcon type="primary" />
           </span>
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="button"
+          onClick={() => openOrder()}
+          type="primary"
+          size="large"
+        >
           Оформить заказ
         </Button>
       </div>
+
+      {/* Modal */}
+      <Modal isShow={isShow} onClose={() => setShow(false)}>
+        <React.Fragment>
+          <p className="text text_type_digits-large mt-8">034536</p>
+          <p className="text text_type_main-medium mt-8">
+            идентификатор заказа
+          </p>
+          <img
+            className="m-15"
+            src={imageDone}
+            alt="done"
+            height={120}
+            width={120}
+          />
+          <p className="text text_type_main-default">
+            Ваш заказ начали готовить
+          </p>
+          <p className="text text_type_main-default text_color_inactive mt-2 mb-10">
+            Дождитесь готовности на орбитальной станции
+          </p>
+        </React.Fragment>
+      </Modal>
     </div>
   );
 }

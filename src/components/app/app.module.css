@@ -37,22 +37,6 @@
   }
 }
 
-.dFlex {
-  display: flex;
-}
-
-.dBlock {
-  display: block;
-}
-
-.container {
-  max-width: 1280px;
-}
-
-.centerBlock {
-  margin: 0 auto;
-}
-
 .contentWrap {
   display: flex;
   gap: 40px;

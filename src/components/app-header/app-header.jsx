@@ -1,6 +1,5 @@
 import React from "react";
 import headerStyles from "./app-header.module.css";
-import appStyles from "../app/app.module.css";
 import {
   Logo,
   BurgerIcon,
@@ -11,7 +10,7 @@ function AppHeader() {
   return (
     <div className={`${headerStyles.headerWrap} `}>
       <header
-        className={`${headerStyles.header} ${appStyles.container} ${appStyles.centerBlock} pt-4 pb-4 `}
+        className={`${headerStyles.header} container centerBlock pt-4 pb-4 `}
       >
         <nav className={`${headerStyles.leftNavigation} `}>
           <span>
