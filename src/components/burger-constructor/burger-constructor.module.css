@@ -1,0 +1,40 @@
+.burgerConstructorWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100vh;
+}
+
+.contstructorCenter {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+  gap: 16px;
+}
+
+.elementLocked {
+  width: 508px;
+  align-self: end;
+  margin-right: 25px;
+}
+
+.constructorElementCenter {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.checkout {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-right: 40px;
+}

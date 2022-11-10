@@ -1,0 +1,62 @@
+.ingredientCards {
+  height: 100vh;
+  display: flex;
+  overflow-y: scroll;
+  flex-wrap: wrap;
+  column-gap: 24px;
+  justify-content: center;    
+}
+
+
+.itemCard{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;  
+  width: 45%;
+  position: relative;
+  gap: 4px; 
+}
+
+
+.itemCard img{
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.itemInfo{
+  text-align: center;
+  display: flex;
+  gap: 4px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+.itemInfo p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.itemInfo span {
+  display: flex;
+  gap: 8px;
+  align-items: center;;
+  margin-right: 16px;
+  padding-top: 2px;
+  padding-bottom: 4px;  
+}
+
+.ingredientsTabs {
+    display: flex;
+    width: 100%;  
+    justify-content: space-between;   
+}
+
+.typeTitle {
+  width: 100%;
+}
+
+.nutrients {
+  gap: 20px
+}
+
+
