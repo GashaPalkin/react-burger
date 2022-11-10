@@ -1,0 +1,42 @@
+.headerWrap {
+  background: #1c1c21;
+
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+
+}
+
+.leftNavigation {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.logo {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.rightNavigation {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+header span {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  ;
+  margin-right: 16px;
+  padding-top: 2px;
+  padding-bottom: 4px;
+}
