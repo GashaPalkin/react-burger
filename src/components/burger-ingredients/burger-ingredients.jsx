@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { ingredientType } from "../../utils/types";
+import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import {
   CurrencyIcon,
@@ -119,51 +120,13 @@ function BurgerIngredients({ data }) {
         })}
       </div>
 
-      {/* Modal. Условие - если в detail не undefined */}
-      {detail && (
+      {/* Modal. Условие - если isShow - true */}    
+      {isShow && (
         <Modal
-          title="Детали ингредиента"
-          isShow={isShow}
+          title="Детали ингредиента" 
           onClose={() => setShow(false)}
-        >
-          <React.Fragment>
-            <img src={detail.image_large} alt={detail.name} />
-            <p className="text text_type_main-medium mt-4">{detail.name}</p>
-            <div className={`${ingredientsStyles.nutrients} flexRow mt-8`}>
-              <div className="centerText">
-                <p className="text text_type_main-default text_color_inactive">
-                  Калории,ккал
-                </p>
-                <p className="text text_type_digits-default text_color_inactive">
-                  {detail.calories}
-                </p>
-              </div>
-              <div className="centerText">
-                <p className="text text_type_main-default text_color_inactive">
-                  Белки,г
-                </p>
-                <p className="text text_type_digits-default text_color_inactive">
-                  {detail.proteins}
-                </p>
-              </div>
-              <div className="centerText">
-                <p className="text text_type_main-default text_color_inactive">
-                  Жиры,г
-                </p>
-                <p className="text text_type_digits-default text_color_inactive">
-                  {detail.fat}
-                </p>
-              </div>
-              <div className="centerText">
-                <p className="text text_type_main-default text_color_inactive">
-                  Углеводы,г
-                </p>
-                <p className="text text_type_digits-default text_color_inactive">
-                  {detail.carbohydrates}
-                </p>
-              </div>
-            </div>
-          </React.Fragment>
+        >          
+          <IngredientDetails currentIngredient={detail} />
         </Modal>
       )}
     </React.Fragment>

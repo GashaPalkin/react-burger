@@ -15,9 +15,3 @@ export const ingredientType = {
     __v: PropTypes.number   
     
 }
-
-export const modalTypes = {
-    onClose: PropTypes.func,
-    title: PropTypes.string,
-    isOpen: PropTypes.bool
-}

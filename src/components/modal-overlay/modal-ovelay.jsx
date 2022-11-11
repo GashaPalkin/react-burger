@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import modalOverlayStyles from "./modal-overlay.module.css";
 import { modalTypes } from "../../utils/types";
 
@@ -10,5 +11,8 @@ function ModalOverlay({ onClose, children }) {
 }
 
 // Типизация компонентов
-export const overlayPropTypes = modalTypes
+ModalOverlay.propTypes = {
+  onClose: PropTypes.func,    
+}
+
 export default ModalOverlay;

@@ -8,17 +8,16 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 const dataURL = "https://norma.nomoreparties.space/api/ingredients";
 
 function App() {
-  
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const getDataFromAPI = async () => {
-      try {
-        const res = await fetch(dataURL);
+      const res = await fetch(dataURL);
+      if (res.status === 200) {
         const data = await res.json();
         setData(data.data);
-      } catch (err) {
-        console.log(err);
+      } else {
+        return Promise.reject(`Ошибка ${res.status}`);
       }
     };
     getDataFromAPI();

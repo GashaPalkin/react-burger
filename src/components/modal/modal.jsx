@@ -1,20 +1,19 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import modalStyles from "./modal.module.css";
-import { modalTypes } from "../../utils/types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import ModalOverlay from "../modal-overlay/modal-ovelay";
-
-const Modal = ({ title, isShow, onClose, children }) => {
+const Modal = ({ title, onClose, children }) => {
   const modalRoot = document.getElementById("modal");
   const stopPropagation = (e) => {
     e.stopPropagation();
   };
   // Для клавиши Escape
   const closeOnEscapeKeyDown = (e) => {
-    if ((e.charCode || e.keyCode) === 27) {
+    if (e.key === "Escape") {
       onClose();
     }
   };
@@ -28,7 +27,7 @@ const Modal = ({ title, isShow, onClose, children }) => {
 
   return createPortal(
     <React.Fragment>
-      {isShow && (        
+           
         <ModalOverlay onClose={onClose}>       
           {/* Здесь onClick={stopPropagation} - чтобы не закрывалось при нажатии на сам modal */}
           <div
@@ -42,7 +41,7 @@ const Modal = ({ title, isShow, onClose, children }) => {
             <div className={`${modalStyles.modalContent} `}>{children}</div>
           </div>        
         </ModalOverlay>
-      )}
+     
     </React.Fragment>,
     // Указываем куда рендерить (в файле index.html)
     modalRoot
@@ -50,5 +49,8 @@ const Modal = ({ title, isShow, onClose, children }) => {
 };
 
 // Типизация компонентов
-export const modalPropTypes = modalTypes
+Modal.propTypes = {
+  onClose: PropTypes.func,
+  title: PropTypes.string, 
+}
 export default Modal;
