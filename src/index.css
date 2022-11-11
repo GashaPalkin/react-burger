@@ -12,6 +12,45 @@ code {
     monospace;
 }
 
+/* Для удобства рабочие классы */
+
+.dFlex {
+  display: flex;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.flexItemsCenter {
+  align-items: center;
+}
+
+.flexContentCenter {
+  justify-content: center;
+}
+
+.dBlock {
+  display: block;
+}
+
+.container {
+  max-width: 1280px;
+}
+
+.centerBlock {
+  margin: 0 auto;
+}
+
+.centerText {
+  text-align: center;
+}
 
 /* Доп стили для верхней булки */
 .constructor-element_pos_top {
@@ -41,8 +80,10 @@ code {
 
 /* полоса прокрутки (скроллбар) */
 ::-webkit-scrollbar {
-  width: 8px; /* ширина для вертикального скролла */
-  height: 8px; /* высота для горизонтального скролла */
+  width: 8px;
+  /* ширина для вертикального скролла */
+  height: 8px;
+  /* высота для горизонтального скролла */
   background-color: #143861;
 }
 
