@@ -1,15 +1,30 @@
 import React from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { ingredientType } from "../../utils/types";
 import constructorStyles from "./burger-constructor.module.css";
+import imageDone from "../../images/done.png";
+import { OrderDetails } from "../order-details/order-details";
 import {
   ConstructorElement,
   Button,
   CurrencyIcon,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../modal/modal";
 
 function BurgerConstructor({ data }) {
+  // Для Modal
+  const [isShow, setShow] = useState(false);
+  function openOrder() {
+    setShow(true);    
+  }
+  // Для OrderDetails
+  const [orderNumber, setOrderNumber] = useState(123456);
+  function getOrderNumber() {
+    // Сеттер для номера заказа. Пока не используется
+    setOrderNumber(654321) 
+  }
   return (
     <div className={`${constructorStyles.burgerConstructorWrap} pl-4 pr-4 `}>
       <ConstructorElement
@@ -20,9 +35,9 @@ function BurgerConstructor({ data }) {
         thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
       />
       <div className={`${constructorStyles.contstructorCenter} `}>
-        {/* Перебираем весь массив */}
+        {/* Перебор массива */}
         {data.map((element, idx) => {
-          // Условие что не булка
+          // Условие - не булка
           if (element.type !== "bun") {
             return (
               <div
@@ -59,10 +74,24 @@ function BurgerConstructor({ data }) {
             <CurrencyIcon type="primary" />
           </span>
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="button"
+          onClick={() => openOrder()}
+          type="primary"
+          size="large"
+        >
           Оформить заказ
         </Button>
       </div>
+
+     
+      
+      {/* Modal */}
+      {isShow && (
+      <Modal onClose={() => setShow(false)}>
+        <OrderDetails orderNumber={orderNumber} />        
+      </Modal>
+       )}
     </div>
   );
 }

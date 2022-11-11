@@ -4,8 +4,7 @@
   overflow-y: scroll;
   flex-wrap: wrap;
   column-gap: 24px;
-  justify-content: center;   
-  /* margin-bottom:50px; */
+  justify-content: center;    
 }
 
 
@@ -16,8 +15,6 @@
   width: 45%;
   position: relative;
   gap: 4px; 
-  /* padding-left: 16px; */
-  /* margin: 0 auto; */
 }
 
 
@@ -56,5 +53,10 @@
 
 .typeTitle {
   width: 100%;
-
 }
+
+.nutrients {
+  gap: 20px
+}
+
+

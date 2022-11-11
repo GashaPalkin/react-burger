@@ -12,5 +12,6 @@ export const ingredientType = {
     image: PropTypes.string,
     image_mobile: PropTypes.string,
     image_large: PropTypes.string,
-    __v: PropTypes.number
+    __v: PropTypes.number   
+    
 }
