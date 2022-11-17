@@ -5,6 +5,8 @@ import appStyles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import { DataContext } from "./data-context";
+
 const dataURL = "https://norma.nomoreparties.space/api/ingredients";
 
 function App() {
@@ -13,7 +15,7 @@ function App() {
   useEffect(() => {
     const getDataFromAPI = async () => {
       const res = await fetch(dataURL);
-      if (res.status === 200) {
+      if (res.ok) {
         const data = await res.json();
         setData(data.data);
       } else {
@@ -30,12 +32,14 @@ function App() {
         <h2 className="text_type_main-large mt-10 mb-5">Соберите бургер</h2>
       </div>
       <main className={`${appStyles.contentWrap} container `}>
-        <div className={`${appStyles.burgerIngredients} `}>
-          <BurgerIngredients data={data} />
-        </div>
-        <div className={`${appStyles.burgerConstructor} `}>
-          <BurgerConstructor data={data} />
-        </div>
+        <DataContext.Provider value={{ data }}>
+          <div className={`${appStyles.burgerIngredients} `}>            
+            <BurgerIngredients />
+          </div>
+          <div className={`${appStyles.burgerConstructor} `}>            
+            <BurgerConstructor />
+          </div>
+        </DataContext.Provider>
       </main>
     </React.Fragment>
   );
