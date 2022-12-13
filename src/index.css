@@ -78,6 +78,15 @@ code {
   margin-right: 16px;
 }
 
+.constructor-element_pos_top {
+   max-height: 80px;
+}
+
+.constructor-element_pos_bottom {  
+  max-height: 80px;
+}
+
+
 /* полоса прокрутки (скроллбар) */
 ::-webkit-scrollbar {
   width: 8px;

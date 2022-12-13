@@ -12,6 +12,17 @@ export const ingredientType = {
     image: PropTypes.string,
     image_mobile: PropTypes.string,
     image_large: PropTypes.string,
-    __v: PropTypes.number   
-    
+    __v: PropTypes.number
+
 }
+
+export const ingredientPropType = PropTypes.shape(ingredientType)
+
+export const categoryType = {
+    value: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired
+}
+
+export const categoryPropType = PropTypes.shape(categoryType)
+
+export const categoriesPropType = PropTypes.arrayOf(categoryPropType)

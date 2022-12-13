@@ -1,93 +1,78 @@
 import React from "react";
-import { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { ingredientType } from "../../utils/types";
 import constructorStyles from "./burger-constructor.module.css";
 import { OrderDetails } from "../order-details/order-details";
+import { deleteIngredient } from "../../services/reducers/constructor-reducer";
+import { DragIngridient } from "./drag-ingridient";
 import {
   ConstructorElement,
   Button,
   CurrencyIcon,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-
 import Modal from "../modal/modal";
-import { DataContext } from "../app/data-context";
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useDrop } from "react-dnd";
+
+import { sentOrder } from "../../services/actions/order-actions";
+import { clearOrder } from "../../services/reducers/order-reducer";
+import { clearConstructor } from "../../services/reducers/constructor-reducer";
 
 function BurgerConstructor() {
-  // Данные из контекста
-  const { data } = useContext(DataContext);
+  const dispatch = useDispatch();
 
-  const onlyBun = (data) => data.find((element) => element.type === "bun");
-  const [bun, setBun] = useState(onlyBun(data));
+  // данные из store
+  const { bun, ingredients } = useSelector((store) => store.constructorReducer);
 
-  const onlyIngredients = (data) =>
-    data.filter((element) => element.type !== "bun");
-  const [ingredients, setIngredients] = useState(onlyIngredients(data));
+  const [{ isHover }, drop] = useDrop(() => ({
+    accept: "ingredients",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+  }));
 
-  const [totalPrice, setTotalPrice] = useState(0);
+  const borderColor = isHover ? "green" : "transparent";
 
-  useEffect(() => {
-    const Bun = onlyBun(data);
-    // console.log(Bun);
+  const { orderNumber } = useSelector((store) => store.orderReducer);
 
-    const Ingredients = onlyIngredients(data);
-    // console.log(Ingredients);
+  // считаем полную стоимость
+  const totalPrice = useMemo(() => {
+    const bunPrice = bun ? bun.price * 2 : 0;
+    const ingredientsPrice = ingredients.reduce(
+      (acc, value) => acc + value.price,
+      0
+    );
+    return bunPrice + ingredientsPrice;
+  }, [bun, ingredients]);
 
-    // Считаем стоимость булки
-    let bunPrice = null;
-    if (Bun) {
-      bunPrice = Bun.price * 2;
-    } else {
-      bunPrice = 0;
-    }
-    // Считаем  стоимость остальных ингредиентов
-    const ingredientsPrice = Array.isArray(Ingredients)
-      ? Ingredients.reduce((sum, current) => sum + current.price, 0)
-      : 0;
-    setBun(Bun);
-    setIngredients(Ingredients);
-    setTotalPrice(bunPrice + ingredientsPrice);
-  }, [data, totalPrice]);
+  // очистка заказа и конструктора
+  function onCloseClearOrder() {
+    dispatch(clearOrder());
+    dispatch(clearConstructor());
+  }
 
-  // Состояние Modal
-  const [isShow, setShow] = useState(false);
-
-  // Для OrderDetails
-  const [orderNumber, setOrderNumber] = useState(0);
-
-  // Отправка запроса POST
-  const postURL = "https://norma.nomoreparties.space/api/orders";
-
-  const sentOrder = async () => {
-    let res = await fetch(postURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ingredients: [
-          bun._id,
-          ...ingredients.map((element) => element._id),
-          bun._id,
-        ],
-      }),
-    });
-    if (res.ok) {
-      let result = await res.json();
-      console.log(result);
-      // Присваиваем номер заказа из ответа
-      setOrderNumber(result.order.number);
-      // Открытие Modal
-      setShow(true);
-    } else {
-      return Promise.reject(`Ошибка ${res.status}`);
-    }
+  // получаем подробности заказа
+  const getOrderDedails = () => {
+    const INGRIDIENTS = [bun._id, ...ingredients.map((el) => el._id), bun._id];
+    dispatch(sentOrder({ ingredients: INGRIDIENTS }));
   };
 
+  // отключение кнопки если нет булки и ингредиентов
+  const disableButton = useMemo(
+    () => !bun || !ingredients.length || orderNumber,
+    [bun, ingredients, orderNumber]
+  );
+
   return (
-    <div className={`${constructorStyles.burgerConstructorWrap} pl-4 pr-4 `}>
-      {/* Верхняя булка bun */}
+    <div
+      ref={drop}
+      style={{ borderColor }}
+      className={`${constructorStyles.burgerConstructorWrap} pl-4 pr-4 `}
+    >
+      {/* верхняя булка bun */}
       {bun && (
         <ConstructorElement
           text={bun.name + " (верх)"}
@@ -99,29 +84,40 @@ function BurgerConstructor() {
       )}
 
       <div className={`${constructorStyles.contstructorCenter} `}>
-        {/* Перебор массива без булок ingredients */}
+        {/* перебор массива без булок ingredients */}
         {ingredients &&
-          ingredients.map((element, idx) => {           
-              return (
-                <div
-                  className={`${constructorStyles.constructorElementCenter} `}
-                  key={idx}
+          ingredients.map((element, idx) => {
+            return (
+              <React.Fragment>
+                <DragIngridient
+                  id={element.uuid}
+                  index={idx}
+                  key={element.uuid}
                 >
-                  <DragIcon />
-                  <ConstructorElement
-                    isLocked={false}
-                    key={element._id}
-                    text={element.name}
-                    type={element.type}
-                    thumbnail={element.image}
-                    price={element.price}
-                  />
-                </div>
-              )          
+                  <div
+                    className={`${constructorStyles.constructorElementCenter} `}
+                  >
+                    <DragIcon />
+                    <ConstructorElement
+                      isLocked={false}
+                      key={element._id}
+                      text={element.name}
+                      type={element.type}
+                      thumbnail={element.image}
+                      price={element.price}
+                      // обязательно handleClose / не onClick
+                      handleClose={() =>
+                        dispatch(deleteIngredient(element.uuid))
+                      }
+                    />
+                  </div>
+                </DragIngridient>
+              </React.Fragment>
+            );
           })}
       </div>
 
-      {/* Нижняя булка bun */}
+      {/* нижняя булка bun */}
       {bun && (
         <ConstructorElement
           text={bun.name + " (низ)"}
@@ -145,15 +141,16 @@ function BurgerConstructor() {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={sentOrder}
+          disabled={disableButton}
+          onClick={getOrderDedails}
         >
           Оформить заказ
         </Button>
       </div>
 
-      {/* Modal */}
-      {isShow && (
-        <Modal onClose={() => setShow(false)}>
+      {/* modal */}
+      {orderNumber && (
+        <Modal onClose={onCloseClearOrder}>
           <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
@@ -161,7 +158,7 @@ function BurgerConstructor() {
   );
 }
 
-// Типизация компонентов
+// типизация компонентов
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape(ingredientType)),
 };
