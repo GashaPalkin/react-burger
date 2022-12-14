@@ -1,143 +1,69 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useMemo, useRef, createRef } from "react";
 import PropTypes from "prop-types";
 import { ingredientType } from "../../utils/types";
-import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import ingredientsStyles from "./burger-ingredients.module.css";
-import {
-  CurrencyIcon,
-  Counter,
-  Tab,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal/modal";
+import { Tabs } from "./tabs";
+import { Category } from "./category";
 
-// Карточка товара.
-const IngredientElement = ({ element, onClick }) => (
-  <div className={`${ingredientsStyles.itemCard} `} onClick={onClick}>
-    <Counter count={1} size="default" />
-    <img className="centerBlock" src={element.image} alt={element.name} />
-    <div className={`${ingredientsStyles.itemInfo} `}>
-      <span
-        className={`${ingredientsStyles.itemPrice} text text_type_digits-default `}
-      >
-        {element.price} <CurrencyIcon type="primary" />
-      </span>
-      <p
-        className={`${ingredientsStyles.itemTitle} text text_type_main-default `}
-      >
-        {element.name}
-      </p>
-    </div>
-  </div>
-);
+function BurgerIngredients() { 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const tabs = [
+    { text: "Булки", value: "bun", ref: useRef(null) },
+    { text: "Соусы", value: "sauce", ref: useRef(null) },
+    { text: "Начинки", value: "main", ref: useRef(null) },
+  ];
 
-function BurgerIngredients({ data }) {
-  // Для Tabs
-  const [current, setCurrent] = React.useState("Булки");
+  const [activeTab, setActiveTab] = useState(tabs[0].value);
 
-  // Для Modal
-  const [isShow, setShow] = useState(false);
-  const [detail, setDetail] = useState();
+  const categoryRef = useRef(null);
 
-  function openDetail(value) {
-    setShow(true);
-    setDetail(value);
-  }
+  const tabsSwitch = (value) => {
+    tabs
+      .find((tab) => tab.value === value)
+      .ref.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const tabsScroll = () => {
+    const distance = (value) =>
+      Math.abs(
+        value.ref.current.getBoundingClientRect().y -
+          categoryRef.current.getBoundingClientRect().y
+      );
+    const tab = tabs.reduce(
+      (acc, value) => (!acc || distance(acc) > distance(value) ? value : acc),
+      null
+    );
+    setActiveTab(tab.value);
+  };
+
+  const categories = useMemo(
+    () =>
+      tabs.map((tab, index) => (
+        <Category type={tab} key={index} ref={tab.ref} />
+      )),
+    [tabs]
+  );
 
   return (
-    <React.Fragment>     
-      {/* Tabs */}
+    <>      
       <div className={`${ingredientsStyles.ingredientsTabs} `}>
-        <Tab value="Булки" active={current === "Булки"} onClick={setCurrent}>
-          Булки
-        </Tab>
-        <Tab value="Соусы" active={current === "Соусы"} onClick={setCurrent}>
-          Соусы
-        </Tab>
-        <Tab
-          value="Начинки"
-          active={current === "Начинки"}
-          onClick={setCurrent}
-        >
-          Начинки
-        </Tab>
+        <Tabs value={activeTab} tabs={tabs} onClick={tabsSwitch} />
       </div>
-
-      {/* Список карточек */}
-      <div className={`${ingredientsStyles.ingredientCards} `}>
-        <h3
-          className={`${ingredientsStyles.typeTitle} text text_type_main-medium mt-10 mb-6`}
-        >
-          Булки
-        </h3>
-
-        {data.map((element) => {
-          if (element.type === "bun") {
-            return (
-              <IngredientElement
-                key={element._id}
-                element={element}
-                onClick={() => openDetail(element)}
-              />
-            );
-          }
-        })}
-
-        <h3
-          className={`${ingredientsStyles.typeTitle} text text_type_main-medium mt-10 mb-6`}
-        >
-          Соусы
-        </h3>
-
-        {data.map((element) => {
-          if (element.type === "sauce") {
-            return (
-              <IngredientElement
-                key={element._id}
-                element={element}
-                onClick={() => openDetail(element)}
-              />
-            );
-          }
-        })}
-
-        <h3
-          className={`${ingredientsStyles.typeTitle} text text_type_main-medium mt-10 mb-6`}
-        >
-          Начинки
-        </h3>
-
-        {data.map((element) => {
-          if (element.type === "main") {
-            return (
-              <IngredientElement
-                key={element._id}
-                element={element}
-                onClick={() => openDetail(element)}
-              />
-            );
-          }
-        })}
+      {/* карточки ингдедиентов по категориям */}
+      <div
+        className={`${ingredientsStyles.ingredientCards} `}
+        ref={categoryRef}
+        onScroll={tabsScroll}
+      >
+        {categories}
       </div>
-
-      {/* Modal. Условие - если isShow - true */}    
-      {isShow && (
-        <Modal
-          title="Детали ингредиента" 
-          onClose={() => setShow(false)}
-        >          
-          <IngredientDetails currentIngredient={detail} />
-        </Modal>
-      )}
-    </React.Fragment>
+    </>
   );
 }
 
-// Типизация компонентов
+// Типизация
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired,
-};
-IngredientElement.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape(ingredientType)),
 };
 

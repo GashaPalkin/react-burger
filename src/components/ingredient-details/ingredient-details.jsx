@@ -50,5 +50,5 @@ export const IngredientDetails = ({ currentIngredient }) => {
 
 //Типизация компонентов
 IngredientDetails.propTypes = {
-  currentIngredient: PropTypes.shape(ingredientType)
-}
+  currentIngredient: PropTypes.shape(ingredientType),
+};

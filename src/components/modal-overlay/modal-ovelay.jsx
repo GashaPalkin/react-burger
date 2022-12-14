@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import modalOverlayStyles from "./modal-overlay.module.css";
-import { modalTypes } from "../../utils/types";
 
 function ModalOverlay({ onClose, children }) {
   return (   
