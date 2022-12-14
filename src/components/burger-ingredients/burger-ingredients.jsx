@@ -6,13 +6,12 @@ import ingredientsStyles from "./burger-ingredients.module.css";
 import { Tabs } from "./tabs";
 import { Category } from "./category";
 
-function BurgerIngredients() {
-  // может использовать useMemo здесь?
+function BurgerIngredients() { 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const tabs = [
-    { text: "Булки", value: "bun", ref: createRef() },
-    { text: "Соусы", value: "sauce", ref: createRef() },
-    { text: "Начинки", value: "main", ref: createRef() },
+    { text: "Булки", value: "bun", ref: useRef(null) },
+    { text: "Соусы", value: "sauce", ref: useRef(null) },
+    { text: "Начинки", value: "main", ref: useRef(null) },
   ];
 
   const [activeTab, setActiveTab] = useState(tabs[0].value);
@@ -47,12 +46,10 @@ function BurgerIngredients() {
   );
 
   return (
-    <React.Fragment>
-      {/* табы  */}
+    <>      
       <div className={`${ingredientsStyles.ingredientsTabs} `}>
         <Tabs value={activeTab} tabs={tabs} onClick={tabsSwitch} />
       </div>
-
       {/* карточки ингдедиентов по категориям */}
       <div
         className={`${ingredientsStyles.ingredientCards} `}
@@ -61,7 +58,7 @@ function BurgerIngredients() {
       >
         {categories}
       </div>
-    </React.Fragment>
+    </>
   );
 }
 

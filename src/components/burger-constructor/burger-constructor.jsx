@@ -72,6 +72,7 @@ function BurgerConstructor() {
       style={{ borderColor }}
       className={`${constructorStyles.burgerConstructorWrap} pl-4 pr-4 `}
     >
+      <>
       {/* верхняя булка bun */}
       {bun && (
         <ConstructorElement
@@ -88,11 +89,10 @@ function BurgerConstructor() {
         {ingredients &&
           ingredients.map((element, idx) => {
             return (
-              <React.Fragment>
+              <React.Fragment key={element.uuid}>
                 <DragIngridient
                   id={element.uuid}
-                  index={idx}
-                  key={element.uuid}
+                  index={idx}                  
                 >
                   <div
                     className={`${constructorStyles.constructorElementCenter} `}
@@ -127,7 +127,7 @@ function BurgerConstructor() {
           type="bottom"
         />
       )}
-
+      </>
       <div className={`${constructorStyles.checkout} pt-10 mr-4 `}>
         <div className="totalPrice">
           <span

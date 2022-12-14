@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const postURL = "https://norma.nomoreparties.space/api/orders";
 
-export const sentOrder = createAsyncThunk(  
+export const sentOrder = createAsyncThunk(
   `order/sentOrder`,
   async (body) => {
     let res = await fetch(postURL, {
@@ -13,10 +13,9 @@ export const sentOrder = createAsyncThunk(
       body: JSON.stringify(body)
     });
     if (res.ok) {
-      const response = await res.json(); 
-      console.log(response);
-      // Просто response ! А не response.data
-      return response;      
+      const response = await res.json();
+      // console.log(response);
+      return response;
     } else {
       return Promise.reject(`Ошибка ${res.status}`);
     }

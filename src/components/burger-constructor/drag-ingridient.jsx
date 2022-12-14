@@ -10,7 +10,7 @@ export const DragIngridient = ({ id, index, children }) => {
   const ref = useRef(null);
 
   const [{ handlerId }, drop] = useDrop({
-    accept: "ingredients",
+    accept: "ingredientsChangePos",
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
@@ -38,12 +38,13 @@ export const DragIngridient = ({ id, index, children }) => {
         return;
       }
       dispatch(moveIngredient({ dragIndex, hoverIndex }));
+      // Здесь какая то ошибка
       item.index = hoverIndex;
     },
   });
 
-  const [{ isDragging }, drag] = useDrag({
-    type: "ingredients",
+  const [{ isDragging }, dragChangePos] = useDrag({
+    type: "ingredientsChangePos",
     item: () => {
       return { id, index };
     },
@@ -54,7 +55,7 @@ export const DragIngridient = ({ id, index, children }) => {
 
   const opacity = isDragging ? 0.1 : 1;
 
-  drag(drop(ref));
+  dragChangePos(drop(ref));
 
   return (
     <div ref={ref} style={{ opacity }} data-handler-id={handlerId}>

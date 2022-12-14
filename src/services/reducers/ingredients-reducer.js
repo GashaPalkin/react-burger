@@ -4,7 +4,9 @@ import { getDataFromAPI } from "../actions/ingredients-actions";
 export const ingredients = createSlice({
   name: 'ingredients',
   initialState: {
-    data: []
+    data: [],
+    loading: false,
+    error: false
   },
   reducers: {
     // стандартная логика редуктора с авто-генерируемыми типами операции для каждого редуктора
@@ -12,12 +14,17 @@ export const ingredients = createSlice({
   },
   extraReducers: (builder) =>
     builder
-      // Запрос успешно выполнился / надо еще другие случаи описать?
       .addCase(getDataFromAPI.fulfilled, (_draft, action) => {
         return {
-          // !? payload.data правильнее ?
           data: action.payload,
         }
+      })
+      .addCase(getDataFromAPI.rejected, (state, action) => {
+        state.error = true
+        console.log(action.error)
+      })
+      .addCase(getDataFromAPI.pending, (state) => {
+        state.loading = true
       })
 })
 
