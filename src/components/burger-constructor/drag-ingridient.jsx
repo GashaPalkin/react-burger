@@ -37,8 +37,7 @@ export const DragIngridient = ({ id, index, children }) => {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      dispatch(moveIngredient({ dragIndex, hoverIndex }));
-      // Здесь какая то ошибка
+      dispatch(moveIngredient({ dragIndex, hoverIndex }));      
       item.index = hoverIndex;
     },
   });

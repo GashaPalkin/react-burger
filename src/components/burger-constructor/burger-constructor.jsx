@@ -16,10 +16,10 @@ import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
-
 import { sentOrder } from "../../services/actions/order-actions";
 import { clearOrder } from "../../services/reducers/order-reducer";
 import { clearConstructor } from "../../services/reducers/constructor-reducer";
+import { useHistory } from "react-router-dom";
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -53,11 +53,16 @@ function BurgerConstructor() {
     dispatch(clearOrder());
     dispatch(clearConstructor());
   }
-
+  const history = useHistory();
+  const { user } = useSelector((store) => store.authReducer);
   // получаем подробности заказа
   const getOrderDedails = () => {
     const INGRIDIENTS = [bun._id, ...ingredients.map((el) => el._id), bun._id];
-    dispatch(sentOrder({ ingredients: INGRIDIENTS }));
+    if (user) {
+      dispatch(sentOrder({ ingredients: INGRIDIENTS }));
+    } else {
+      history.replace({ pathname: "/login" });
+    }
   };
 
   // отключение кнопки если нет булки и ингредиентов
@@ -73,60 +78,57 @@ function BurgerConstructor() {
       className={`${constructorStyles.burgerConstructorWrap} pl-4 pr-4 `}
     >
       <>
-      {/* верхняя булка bun */}
-      {bun && (
-        <ConstructorElement
-          text={bun.name + " (верх)"}
-          thumbnail={bun.image}
-          price={bun.price}
-          isLocked={true}
-          type="top"
-        />
-      )}
+        {/* верхняя булка bun */}
+        {bun && (
+          <ConstructorElement
+            text={bun.name + " (верх)"}
+            thumbnail={bun.image}
+            price={bun.price}
+            isLocked={true}
+            type="top"
+          />
+        )}
 
-      <div className={`${constructorStyles.contstructorCenter} `}>
-        {/* перебор массива без булок ingredients */}
-        {ingredients &&
-          ingredients.map((element, idx) => {
-            return (
-              <React.Fragment key={element.uuid}>
-                <DragIngridient
-                  id={element.uuid}
-                  index={idx}                  
-                >
-                  <div
-                    className={`${constructorStyles.constructorElementCenter} `}
-                  >
-                    <DragIcon />
-                    <ConstructorElement
-                      isLocked={false}
-                      key={element._id}
-                      text={element.name}
-                      type={element.type}
-                      thumbnail={element.image}
-                      price={element.price}
-                      // обязательно handleClose / не onClick
-                      handleClose={() =>
-                        dispatch(deleteIngredient(element.uuid))
-                      }
-                    />
-                  </div>
-                </DragIngridient>
-              </React.Fragment>
-            );
-          })}
-      </div>
+        <div className={`${constructorStyles.contstructorCenter} `}>
+          {/* перебор массива без булок ingredients */}
+          {ingredients &&
+            ingredients.map((element, idx) => {
+              return (
+                <React.Fragment key={element.uuid}>
+                  <DragIngridient id={element.uuid} index={idx}>
+                    <div
+                      className={`${constructorStyles.constructorElementCenter} `}
+                    >
+                      <DragIcon />
+                      <ConstructorElement
+                        isLocked={false}
+                        key={element._id}
+                        text={element.name}
+                        type={element.type}
+                        thumbnail={element.image}
+                        price={element.price}
+                        // обязательно handleClose / не onClick
+                        handleClose={() =>
+                          dispatch(deleteIngredient(element.uuid))
+                        }
+                      />
+                    </div>
+                  </DragIngridient>
+                </React.Fragment>
+              );
+            })}
+        </div>
 
-      {/* нижняя булка bun */}
-      {bun && (
-        <ConstructorElement
-          text={bun.name + " (низ)"}
-          thumbnail={bun.image}
-          price={bun.price}
-          isLocked={true}
-          type="bottom"
-        />
-      )}
+        {/* нижняя булка bun */}
+        {bun && (
+          <ConstructorElement
+            text={bun.name + " (низ)"}
+            thumbnail={bun.image}
+            price={bun.price}
+            isLocked={true}
+            type="bottom"
+          />
+        )}
       </>
       <div className={`${constructorStyles.checkout} pt-10 mr-4 `}>
         <div className="totalPrice">

@@ -15,6 +15,7 @@ export const sentOrder = createAsyncThunk(
     if (res.ok) {
       const response = await res.json();
       // console.log(response);
+      // payload в order-reducer
       return response;
     } else {
       return Promise.reject(`Ошибка ${res.status}`);

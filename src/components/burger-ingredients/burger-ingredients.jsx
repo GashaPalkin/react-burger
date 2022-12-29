@@ -1,12 +1,11 @@
-import React from "react";
-import { useState, useMemo, useRef, createRef } from "react";
+import { useState, useMemo, useRef } from "react";
 import PropTypes from "prop-types";
 import { ingredientType } from "../../utils/types";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import { Tabs } from "./tabs";
 import { Category } from "./category";
 
-function BurgerIngredients() { 
+function BurgerIngredients() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const tabs = [
     { text: "Булки", value: "bun", ref: useRef(null) },
@@ -46,7 +45,7 @@ function BurgerIngredients() {
   );
 
   return (
-    <>      
+    <>
       <div className={`${ingredientsStyles.ingredientsTabs} `}>
         <Tabs value={activeTab} tabs={tabs} onClick={tabsSwitch} />
       </div>

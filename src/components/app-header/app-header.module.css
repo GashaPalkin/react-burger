@@ -8,12 +8,17 @@
   justify-content: center;
 
 }
+.header a {
+  color: white;
+  text-decoration: none;
+}
 
 .leftNavigation {
   flex: 1;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  color:white;
 }
 
 .logo {
@@ -23,19 +28,17 @@
   align-items: center;
 }
 
-
 .rightNavigation {
   flex: 1;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: center;  
 }
 
 header span {
   display: flex;
   gap: 8px;
   align-items: center;
-  ;
   margin-right: 16px;
   padding-top: 2px;
   padding-bottom: 4px;
