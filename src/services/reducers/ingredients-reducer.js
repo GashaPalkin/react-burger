@@ -16,12 +16,11 @@ export const ingredients = createSlice({
     builder
       .addCase(getDataFromAPI.fulfilled, (_draft, action) => {
         return {
-          data: action.payload,
+          data: action.payload.data,
         }
       })
       .addCase(getDataFromAPI.rejected, (state, action) => {
         state.error = true
-        console.log(action.error)
       })
       .addCase(getDataFromAPI.pending, (state) => {
         state.loading = true

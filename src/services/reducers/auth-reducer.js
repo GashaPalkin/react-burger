@@ -22,7 +22,7 @@ export const auth = createSlice({
       .addCase(registerRequest.fulfilled, (_draft, action) => {
         let accessToken = action.payload.accessToken;
         let refreshToken = action.payload.refreshToken;
-        localStorage.setItem('accessToken', accessToken);
+        setCookie('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
         return {
           user: action.payload.user,
@@ -40,7 +40,7 @@ export const auth = createSlice({
       .addCase(loginRequest.fulfilled, (_draft, action) => {
         let accessToken = action.payload.accessToken;
         let refreshToken = action.payload.refreshToken;
-        localStorage.setItem('accessToken', accessToken);
+        setCookie('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
         return {
           user: action.payload.user,
@@ -57,7 +57,7 @@ export const auth = createSlice({
       })
       // logout cases
       .addCase(logoutRequest.fulfilled, (_draft, action) => {
-        localStorage.removeItem('accessToken');
+        deleteCookie('accessToken');
         localStorage.removeItem('refreshToken');
         return {
           user: null,
@@ -82,7 +82,6 @@ export const auth = createSlice({
       .addCase(getUserRequest.rejected, (state, action) => {
         state.error = true
         state.isAuthChecked = true
-        console.log(action.error)
       })
       .addCase(getUserRequest.pending, (state) => {
         state.loading = true

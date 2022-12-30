@@ -4,8 +4,7 @@ import { Route, Redirect, useLocation } from "react-router-dom";
 export const ProtectedRoute = ({ onlyNotAuth = false, ...rest }) => {
   const { user } = useSelector((store) => store.authReducer);
   const location = useLocation();
-  // console.log(location)
-
+  
   if (onlyNotAuth && user) {
     const { from } = location.state || { from: { pathname: "/" } };
     return <Redirect to={from} />;

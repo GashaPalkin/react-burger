@@ -16,9 +16,10 @@ export const ProfilePage = () => {
     >
       <div className={`${profilePageStyles.profileLeftSide} `}>
         <nav className={`${profilePageStyles.profileNav} `}>
+          {/* ! может тут наоборот оставить только exact, чтобы от ошибки избавиться */}
           <NavLink
             to="/profile"
-            exact="true"
+            exact={true}
             className={`text text_type_main-medium text_color_inactive`}
             activeClassName={`${profilePageStyles.activeLink} `}
           >
@@ -26,7 +27,7 @@ export const ProfilePage = () => {
           </NavLink>
           <NavLink
             to="/profile/orders"
-            exact="true"
+            exact={true}
             className={`text text_type_main-medium text_color_inactive`}
             activeClassName={`${profilePageStyles.activeLink} `}
           >
@@ -48,10 +49,10 @@ export const ProfilePage = () => {
       </div>
       <div className={`${profilePageStyles.profileRightSide} `}>
         <Switch>
-          <Route path="/profile" exact="true">
+          <Route path="/profile" exact={true}>
             <ProfileForm />
           </Route>
-          <Route path="/profile/orders" exact="true">
+          <Route path="/profile/orders" exact={true}>
             <ProfileHistory />
           </Route>
         </Switch>

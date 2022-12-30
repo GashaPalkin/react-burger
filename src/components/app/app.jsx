@@ -14,6 +14,7 @@ import { getUserRequest } from "../../services/actions/auth-actions";
 import { ProtectedRoute } from "../../components/protected-route/protected-route";
 import { useDispatch } from "react-redux";
 import { getDataFromAPI } from "../../services/actions/ingredients-actions";
+import { getCookie } from "../../utils/utils";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 
@@ -22,16 +23,14 @@ function App() {
   const history = useHistory();
   const background = location.state && location.state.background;
   const dispatch = useDispatch();
-  let isAuth = localStorage.accessToken;
-
   const handleModalClose = () => history.goBack();
 
   useEffect(() => {
     dispatch(getDataFromAPI());
-    if (isAuth) {
+    if (getCookie("accessToken")) {
       dispatch(getUserRequest());
     }
-  }, [dispatch, isAuth]);
+  }, [dispatch]);
 
   return (
     <React.Fragment>
@@ -57,7 +56,7 @@ function App() {
         <ProtectedRoute path="/profile">
           <ProfilePage />
         </ProtectedRoute>
-        <Route path="/ingredients/:id" exact="true">
+        <Route path="/ingredients/:id" exact={true}>
           <div className="container centerBlock mt-10">
             <IngredientDetails />
           </div>
@@ -71,7 +70,7 @@ function App() {
         <Route
           path="/ingredients/:id"
           children={
-            <Modal onClose={handleModalClose}>
+            <Modal title="Детали ингредиента" onClose={handleModalClose}>
               <IngredientDetails />
             </Modal>
           }
