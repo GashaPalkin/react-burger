@@ -3,6 +3,8 @@ import { ingredientType } from "../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import { useDrag } from "react-dnd";
+import { Link, useLocation } from "react-router-dom";
+
 import {
   addIngredient,
   setBun,
@@ -16,10 +18,10 @@ import {
 export const IngredientElement = ({ element, onClick }) => {
   const dispatch = useDispatch();
   // деструктуризация данных из element
-  const { image, price, name } = element;
+  const { image, price, name, _id } = element;
   // чтобы считать количество в counter
   const { bun, ingredients } = useSelector((store) => store.constructorReducer);
-
+  const location = useLocation();
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "ingredients",
     // element - это payload
@@ -49,27 +51,31 @@ export const IngredientElement = ({ element, onClick }) => {
       : ingredients.filter((el) => el._id === element._id).length;
 
   return (
-    <div
-      className={`${ingredientsStyles.itemCard} `}
-      onClick={onClick}
-      ref={drag}
-      style={dragStyle}
+    <Link
+      key={_id}
+      to={{
+        pathname: `/ingredients/${_id}`,
+        state: { background: location },
+      }}
+      className={`${ingredientsStyles.itemCard} ${ingredientsStyles.link} `}
     >
-      {!!count && <Counter count={count} size="default" />}
-      <img className="centerBlock" src={image} alt={name} />
-      <div className={`${ingredientsStyles.itemInfo} `}>
-        <span
-          className={`${ingredientsStyles.itemPrice} text text_type_digits-default `}
-        >
-          {price} <CurrencyIcon type="primary" />
-        </span>
-        <p
-          className={`${ingredientsStyles.itemTitle} text text_type_main-default `}
-        >
-          {name}
-        </p>
+      <div onClick={onClick} ref={drag} style={dragStyle}>
+        {!!count && <Counter count={count} size="default" />}
+        <img className="centerBlock" src={image} alt={name} />
+        <div className={`${ingredientsStyles.itemInfo} `}>
+          <span
+            className={`${ingredientsStyles.itemPrice} text text_type_digits-default `}
+          >
+            {price} <CurrencyIcon type="primary" />
+          </span>
+          <p
+            className={`${ingredientsStyles.itemTitle} text text_type_main-default `}
+          >
+            {name}
+          </p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -2,11 +2,9 @@ import { categoryPropType } from "../../utils/types";
 import { useMemo, useCallback, forwardRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ingredientsStyles from "./burger-ingredients.module.css";
-import Modal from "../modal/modal";
 import { IngredientElement } from "./ingredient-element";
-import { IngredientDetails } from "../ingredient-details/ingredient-details";
-import {
-  clearDetails,
+
+import { 
   setDetails,
 } from "../../services/reducers/ingredient-details-reducer";
 
@@ -18,11 +16,7 @@ export const Category = forwardRef(({ type }, ref) => {
   const dispatch = useDispatch();
   // данные из store
   const { data } = useSelector((store) => store.ingredientsReducer);
-  // для modal
-  const details = useSelector((store) => store.ingredientDetailsReducer);
-  const closeIngredientDetails = useCallback(() => {
-    dispatch(clearDetails());
-  }, [dispatch]);
+
   const openIngredientDetails = useCallback(
     (value) => {
       dispatch(setDetails(value));
@@ -52,12 +46,6 @@ export const Category = forwardRef(({ type }, ref) => {
         {type.text || type.value}
       </h2>
       <div className={`${ingredientsStyles.cardList} `}>{cardsList}</div>
-
-      {details && (
-        <Modal title="Детали ингредиента" onClose={closeIngredientDetails}>
-          <IngredientDetails currentIngredient={details} />
-        </Modal>
-      )}
     </div>
   );
 });

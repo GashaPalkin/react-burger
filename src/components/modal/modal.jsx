@@ -11,7 +11,7 @@ const Modal = ({ title, onClose, children }) => {
   const stopPropagation = (e) => {
     e.stopPropagation();
   };
-  // Для клавиши Escape
+  // для клавиши Escape
   const closeOnEscapeKeyDown = (e) => {
     if (e.key === "Escape") {
       onClose();
@@ -29,7 +29,7 @@ const Modal = ({ title, onClose, children }) => {
     <React.Fragment>
            
         <ModalOverlay onClose={onClose}>       
-          {/* Здесь onClick={stopPropagation} - чтобы не закрывалось при нажатии на сам modal */}
+          {/* здесь onClick={stopPropagation} - чтобы не закрывалось при нажатии на сам modal */}
           <div
             className={`${modalStyles.modal} pt-10 pb-15 pl-10 pr-10 `}
             onClick={stopPropagation}
@@ -43,12 +43,12 @@ const Modal = ({ title, onClose, children }) => {
         </ModalOverlay>
      
     </React.Fragment>,
-    // Указываем куда рендерить (в файле index.html)
+    // указываем куда рендерить (в файле index.html)
     modalRoot
   );
 };
 
-// Типизация компонентов
+// типизация компонентов
 Modal.propTypes = {
   onClose: PropTypes.func,
   title: PropTypes.string, 

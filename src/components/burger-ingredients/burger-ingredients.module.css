@@ -1,3 +1,6 @@
+.detailWrapper {
+  text-align: center;
+}
 .ingredientCards {
   height: calc(100vh - 265px);
   padding-bottom: 15px;
@@ -61,5 +64,11 @@
 }
 
 .nutrients {
-  gap: 20px
+  gap: 20px;
+  justify-content: center;
+}
+
+.link {
+  text-decoration: none;
+  color:white
 }

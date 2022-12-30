@@ -2,10 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ingredientType } from "../../utils/types";
 import ingredientsStyles from "../burger-ingredients/burger-ingredients.module.css";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router";
 
-export const IngredientDetails = ({ currentIngredient }) => {
+export const IngredientDetails = ({ props }) => {
+  const { data } = useSelector((store) => store.ingredientsReducer);
+  const { id } = useParams();
+  const currentIngredient = data.find((el) => el._id === id);
+  // на время пока ищет нужный элемент
+  if (!currentIngredient) return <></>;
   return (
-    <React.Fragment>
+    <div className={`${ingredientsStyles.detailWrapper} `}>     
       <img src={currentIngredient.image_large} alt={currentIngredient.name} />
       <p className="text text_type_main-medium mt-4">
         {currentIngredient.name}
@@ -43,12 +50,12 @@ export const IngredientDetails = ({ currentIngredient }) => {
             {currentIngredient.carbohydrates}
           </p>
         </div>
-      </div>
-    </React.Fragment>
+      </div>  
+    </div>
   );
 };
 
 //Типизация компонентов
 IngredientDetails.propTypes = {
-  currentIngredient: PropTypes.shape(ingredientType),
+  ingredient: PropTypes.shape(ingredientType),
 };
