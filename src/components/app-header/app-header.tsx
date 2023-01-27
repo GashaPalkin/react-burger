@@ -1,4 +1,3 @@
-import React from "react";
 import headerStyles from "./app-header.module.css";
 import {
   Logo,
@@ -6,25 +5,24 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { NavLink, useRouteMatch } from "react-router-dom";
+
 function AppHeader() {
+  const isConstructor = !!useRouteMatch({ path: "/", exact: true });
+  const isOrderFeed = !!useRouteMatch("/notfound");
+  const isProfile = !!useRouteMatch("/profile");
+
   return (
     <div className={`${headerStyles.headerWrap} `}>
       <header
         className={`${headerStyles.header} container centerBlock pt-4 pb-4 `}
       >
         <nav className={`${headerStyles.leftNavigation} `}>
-<<<<<<< Updated upstream:src/components/app-header/app-header.jsx
-          <span>
-            <BurgerIcon className="mr-10" type="primary" />
-            Конструктор
-          </span>
-          <span>
-            <ListIcon type="primary" />
-            Лента заказов
-=======
           <NavLink to="/">
             <span>
-              <BurgerIcon type={isConstructor ? "primary" : "secondary"} />
+              <BurgerIcon                
+                type={isConstructor ? "primary" : "secondary"}
+              />
               <p className="text text_type_main-default text_color_inactive">
                 Конструктор
               </p>
@@ -42,19 +40,18 @@ function AppHeader() {
         <NavLink to="/">
           <span className={`${headerStyles.logo} `}>
             <Logo />
->>>>>>> Stashed changes:src/components/app-header/app-header.tsx
           </span>
-        </nav>
-
-        <span className={`${headerStyles.logo} `}>
-          <Logo />
-        </span>
-
+        </NavLink>
         <nav className={`${headerStyles.rightNavigation} `}>
-          <span>
-            <ProfileIcon type="primary" />
-            Личный кабинет
-          </span>
+          <NavLink to="/profile">
+            <span>
+              <ProfileIcon type={isProfile ? "primary" : "secondary"} />
+              <p className="text text_type_main-default text_color_inactive">
+                {" "}
+                Личный кабинет
+              </p>
+            </span>
+          </NavLink>
         </nav>
       </header>
     </div>

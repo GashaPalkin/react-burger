@@ -1,29 +1,7 @@
-<<<<<<< Updated upstream:src/components/app/app.jsx
-import React from "react";
-import { useEffect, useState } from "react";
-=======
 import { useEffect } from "react";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
->>>>>>> Stashed changes:src/components/app/app.tsx
 import "@ya.praktikum/react-developer-burger-ui-components";
-import appStyles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
-<<<<<<< Updated upstream:src/components/app/app.jsx
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-
-// ! Данные из store
-import { useDispatch } from 'react-redux';
-import { getDataFromAPI } from "../../services/actions/ingredients-actions";
-
-function App() { 
-  
- // ! Данные из store
-const dispatch = useDispatch()
-useEffect(() => {
-    dispatch(getDataFromAPI())
-}, [dispatch])
-=======
 import { MainPage } from "../../pages/main";
 import { LoginPage } from "../../pages/login/login";
 import { ForgotPasswordPage } from "../../pages/forgot-password/forgot-password";
@@ -55,25 +33,10 @@ function App() {
       dispatch(getUserRequest());
     }
   }, [dispatch]);
->>>>>>> Stashed changes:src/components/app/app.tsx
 
   return (
     <>
       <AppHeader />
-<<<<<<< Updated upstream:src/components/app/app.jsx
-      <div className="container centerBlock">
-        <h2 className="text_type_main-large mt-10 mb-5">Соберите бургер</h2>
-      </div>
-      <main className={`${appStyles.contentWrap} container `}>      
-          <div className={`${appStyles.burgerIngredients} `}>
-            <BurgerIngredients />
-          </div>
-          <div className={`${appStyles.burgerConstructor} `}>
-            <BurgerConstructor />
-          </div>       
-      </main>
-    </React.Fragment>
-=======
       <Switch location={background || location}>
         <Route path="/" exact={true}>
           <MainPage />
@@ -116,7 +79,6 @@ function App() {
         />
       )}
     </>
->>>>>>> Stashed changes:src/components/app/app.tsx
   );
 }
 

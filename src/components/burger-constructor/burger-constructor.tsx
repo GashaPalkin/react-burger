@@ -18,15 +18,12 @@ import { useDrop } from "react-dnd";
 import { sentOrder } from "../../services/actions/order-actions";
 import { clearOrder } from "../../services/reducers/order-reducer";
 import { clearConstructor } from "../../services/reducers/constructor-reducer";
-<<<<<<< Updated upstream:src/components/burger-constructor/burger-constructor.jsx
-=======
 import { useHistory } from "react-router-dom";
 import { IngredientType } from "../../utils/types";
 
 interface IngredientUUIDType extends IngredientType {
   uuid: string;
 }
->>>>>>> Stashed changes:src/components/burger-constructor/burger-constructor.tsx
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -63,13 +60,6 @@ function BurgerConstructor() {
     // @ts-ignore
     dispatch(clearConstructor());
   }
-<<<<<<< Updated upstream:src/components/burger-constructor/burger-constructor.jsx
-
-  // получаем подробности заказа
-  const getOrderDedails = () => {
-    const INGRIDIENTS = [bun._id, ...ingredients.map((el) => el._id), bun._id];
-    dispatch(sentOrder({ ingredients: INGRIDIENTS }));
-=======
   const history = useHistory();
   // ! типизировать store в следующем спринте
   // @ts-ignore
@@ -87,7 +77,6 @@ function BurgerConstructor() {
     } else {
       history.replace({ pathname: "/login" });
     }
->>>>>>> Stashed changes:src/components/burger-constructor/burger-constructor.tsx
   };
 
   // отключение кнопки если нет булки и ингредиентов
@@ -103,18 +92,6 @@ function BurgerConstructor() {
       className={`${constructorStyles.burgerConstructorWrap} pl-4 pr-4 `}
     >
       <>
-<<<<<<< Updated upstream:src/components/burger-constructor/burger-constructor.jsx
-      {/* верхняя булка bun */}
-      {bun && (
-        <ConstructorElement
-          text={bun.name + " (верх)"}
-          thumbnail={bun.image}
-          price={bun.price}
-          isLocked={true}
-          type="top"
-        />
-      )}
-=======
         {/* верхняя булка bun */}
         {bun && (
           <ConstructorElement
@@ -153,41 +130,7 @@ function BurgerConstructor() {
                 </React.Fragment>
               );
             })}
-        </div>
->>>>>>> Stashed changes:src/components/burger-constructor/burger-constructor.tsx
-
-      <div className={`${constructorStyles.contstructorCenter} `}>
-        {/* перебор массива без булок ingredients */}
-        {ingredients &&
-          ingredients.map((element, idx) => {
-            return (
-              <React.Fragment key={element.uuid}>
-                <DragIngridient
-                  id={element.uuid}
-                  index={idx}                  
-                >
-                  <div
-                    className={`${constructorStyles.constructorElementCenter} `}
-                  >
-                    <DragIcon />
-                    <ConstructorElement
-                      isLocked={false}
-                      key={element._id}
-                      text={element.name}
-                      type={element.type}
-                      thumbnail={element.image}
-                      price={element.price}
-                      // обязательно handleClose / не onClick
-                      handleClose={() =>
-                        dispatch(deleteIngredient(element.uuid))
-                      }
-                    />
-                  </div>
-                </DragIngridient>
-              </React.Fragment>
-            );
-          })}
-      </div>
+        </div>  
 
       {/* нижняя булка bun */}
       {bun && (

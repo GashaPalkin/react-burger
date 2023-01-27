@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { registerRequest, loginRequest, logoutRequest, getUserRequest, userPatchRequest, resetPasswordRequest, resetPassword } from "../actions/auth-actions";
-import { setCookie, deleteCookie } from "../../utils/utils";
+import { setCookie, getCookie, deleteCookie } from "../../utils/utils";
 
 const initialState = {
   user: null,

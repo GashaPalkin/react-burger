@@ -14,7 +14,7 @@ export const constructor = createSlice({
       state.bun = payload
     },
    
-    removeBun(state) {
+    removeBun(state) { 
       state.bun = null
     },
     addIngredient: {
@@ -29,7 +29,7 @@ export const constructor = createSlice({
     },
     moveIngredient(state, { payload }) {
       const { dragIndex, hoverIndex } = payload
-      // Меняем местами элементы
+      // меняем местами элементы
       state.ingredients.splice(hoverIndex, 0, state.ingredients.splice(dragIndex, 1)[0])
     },   
     clearConstructor() {

@@ -54,10 +54,6 @@ export const DragIngridient: FC<DragItemProps> = ({ id, index, children }) => {
         return;
       }
       dispatch(moveIngredient({ dragIndex, hoverIndex }));
-<<<<<<< Updated upstream:src/components/burger-constructor/drag-ingridient.jsx
-      // Здесь какая то ошибка
-=======
->>>>>>> Stashed changes:src/components/burger-constructor/drag-ingridient.tsx
       item.index = hoverIndex;
     },
   });
