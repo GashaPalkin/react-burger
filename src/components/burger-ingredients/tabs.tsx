@@ -1,10 +1,15 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { categoriesPropType } from "../../utils/types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useMemo } from "react";
+import { CategoryType } from "../../utils/types";
+import { FC } from "react";
 
-export const Tabs = ({ value, tabs, onClick }) => {
+interface TabsProps {
+  tabs: CategoryType[];
+  value: string;
+  onClick: (value: string) => void;
+}
+
+export const Tabs: FC<TabsProps> = ({ value, tabs, onClick }) => {
   const tabsList = useMemo(
     () =>
       tabs.map((tab, index) => (
@@ -20,12 +25,5 @@ export const Tabs = ({ value, tabs, onClick }) => {
     [tabs, value, onClick]
   );
 
-  return <React.Fragment>{tabsList}</React.Fragment>;
+  return <>{tabsList}</>;
 };
-
-// Типизация
-Tabs.propTypes = {
-  tabs: categoriesPropType.isRequired,
-  value: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
-}

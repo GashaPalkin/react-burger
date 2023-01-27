@@ -1,10 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
+import { FC } from "react";
 import imageDone from "../../images/done.png";
 
-export const OrderDetails = ({ orderNumber  }) => {
+interface OrderDetailProps {
+  orderNumber: number;
+}
+
+export const OrderDetails: FC<OrderDetailProps> = ({ orderNumber  }) => {
   return (
-    <React.Fragment>
+    <>
         <p className="text text_type_digits-large mt-8">
            {orderNumber}
           </p>
@@ -24,11 +27,6 @@ export const OrderDetails = ({ orderNumber  }) => {
           <p className="text text_type_main-default text_color_inactive mt-2 mb-10">
             Дождитесь готовности на орбитальной станции
           </p>
-    </React.Fragment>
+    </>
   );
 };
-
-//Типизация компонентов
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number
-}

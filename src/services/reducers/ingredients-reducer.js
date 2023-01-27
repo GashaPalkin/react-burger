@@ -19,7 +19,7 @@ export const ingredients = createSlice({
           data: action.payload,
         }
       })
-      .addCase(getDataFromAPI.rejected, (state, action) => {
+      .addCase(getDataFromAPI.rejected, (state) => {
         state.error = true
         console.log(action.error)
       })

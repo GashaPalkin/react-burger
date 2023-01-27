@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import { ingredientType } from "../../utils/types";
+import { FC } from "react";
+import { IngredientType } from "../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import { useDrag } from "react-dnd";
@@ -13,11 +13,18 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const IngredientElement = ({ element, onClick }) => {
+interface ElementProps {
+  element: IngredientType;
+  onClick: () => void;
+}
+
+export const IngredientElement: FC<ElementProps> = ({ element, onClick }) => {
   const dispatch = useDispatch();
   // деструктуризация данных из element
   const { image, price, name } = element;
   // чтобы считать количество в counter
+  // ! типизировать store в следующем спринте
+  // @ts-ignore
   const { bun, ingredients } = useSelector((store) => store.constructorReducer);
 
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -45,8 +52,11 @@ export const IngredientElement = ({ element, onClick }) => {
 
   const count =
     element.type === "bun"
-      ? (bun || 0) && (bun._id === element._id) * 2
-      : ingredients.filter((el) => el._id === element._id).length;
+      ? bun !== null && bun._id === element._id
+        ? 2
+        : 0
+      : ingredients.filter((el: { _id: string }) => el._id === element._id)
+          .length;
 
   return (
     <div
@@ -71,9 +81,4 @@ export const IngredientElement = ({ element, onClick }) => {
       </div>
     </div>
   );
-};
-
-// Типизация
-IngredientElement.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(ingredientType)),
 };

@@ -13,6 +13,7 @@ function AppHeader() {
         className={`${headerStyles.header} container centerBlock pt-4 pb-4 `}
       >
         <nav className={`${headerStyles.leftNavigation} `}>
+<<<<<<< Updated upstream:src/components/app-header/app-header.jsx
           <span>
             <BurgerIcon className="mr-10" type="primary" />
             Конструктор
@@ -20,6 +21,28 @@ function AppHeader() {
           <span>
             <ListIcon type="primary" />
             Лента заказов
+=======
+          <NavLink to="/">
+            <span>
+              <BurgerIcon type={isConstructor ? "primary" : "secondary"} />
+              <p className="text text_type_main-default text_color_inactive">
+                Конструктор
+              </p>
+            </span>
+          </NavLink>
+          <NavLink to="/notfound">
+            <span>
+              <ListIcon type={isOrderFeed ? "primary" : "secondary"} />
+              <p className="text text_type_main-default text_color_inactive">
+                Лента заказов
+              </p>
+            </span>
+          </NavLink>
+        </nav>
+        <NavLink to="/">
+          <span className={`${headerStyles.logo} `}>
+            <Logo />
+>>>>>>> Stashed changes:src/components/app-header/app-header.tsx
           </span>
         </nav>
 

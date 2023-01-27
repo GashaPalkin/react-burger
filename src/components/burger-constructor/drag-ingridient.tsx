@@ -1,15 +1,29 @@
-import PropTypes from "prop-types";
-import { useRef } from "react";
+import { useRef, FC, ReactElement } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { moveIngredient } from "../../services/reducers/constructor-reducer";
+import type { Identifier } from "dnd-core";
 
-export const DragIngridient = ({ id, index, children }) => {
+interface DragItemProps {
+  id: string;
+  index: number;
+  children?: ReactElement;
+}
+
+interface DragObject {
+  id: string;
+  index: number;
+}
+
+interface CollectedProps {
+  handlerId: Identifier | null;
+}
+
+export const DragIngridient: FC<DragItemProps> = ({ id, index, children }) => {
   const dispatch = useDispatch();
+  const ref = useRef<HTMLDivElement>(null);
 
-  const ref = useRef(null);
-
-  const [{ handlerId }, drop] = useDrop({
+  const [{ handlerId }, drop] = useDrop<DragObject, undefined, CollectedProps>({
     accept: "ingredientsChangePos",
     collect(monitor) {
       return {
@@ -25,11 +39,13 @@ export const DragIngridient = ({ id, index, children }) => {
       if (dragIndex === hoverIndex) {
         return;
       }
-      // ! см. https://basicweb.ru/javascript/js_element_getboundingclientrect.php
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
+      if (!clientOffset) {
+        return;
+      }
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -38,7 +54,10 @@ export const DragIngridient = ({ id, index, children }) => {
         return;
       }
       dispatch(moveIngredient({ dragIndex, hoverIndex }));
+<<<<<<< Updated upstream:src/components/burger-constructor/drag-ingridient.jsx
       // Здесь какая то ошибка
+=======
+>>>>>>> Stashed changes:src/components/burger-constructor/drag-ingridient.tsx
       item.index = hoverIndex;
     },
   });
@@ -62,10 +81,4 @@ export const DragIngridient = ({ id, index, children }) => {
       {children}
     </div>
   );
-};
-
-// типизация компонентов
-DragIngridient.propTypes = {
-  id: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
 };
