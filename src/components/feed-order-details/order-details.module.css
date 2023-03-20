@@ -1,0 +1,66 @@
+.wrapper {
+   display: flex;
+   flex-direction: column;
+   margin: auto;
+   max-width: 640px;
+}
+
+.status {
+   font-size: 16px;
+   color: #00CCCC;
+}
+
+.ingredients {
+   max-height: calc(740px - 450px);
+   overflow-y: overlay;
+   display: flex;
+   flex-direction: column;
+   gap: 24px;
+   padding-right: 20px;
+   padding-left: 20px;
+}
+
+.ingredientWrapper {
+   display: flex;
+   justify-content: space-between;
+}
+
+.ingredientWrapper :first-child {
+   display: flex;
+   gap: 16px;
+   align-items: center;
+   margin-right: 5%;
+}
+
+.ingredientImg {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 50%;
+   width: 64px;
+   height: 64px;
+   margin-left: -20px;
+   background: linear-gradient(#131316, #131316) padding-box,
+      linear-gradient(to right, #801ab2, #4c4cff) border-box;
+   border: 2px solid transparent;
+   padding: 2px;
+   position: relative;
+}
+
+.ingredientImg img {
+   height: 56px;
+}
+
+.orderCardPrice {
+   display: flex;
+   justify-self: flex-end;
+   align-items: center;
+   gap: 5px;
+}
+
+.info {
+   margin-top: 40px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
