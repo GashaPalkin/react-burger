@@ -14,6 +14,7 @@ export const FeedOrders = () => {
     dispatch(connectAll(`${ALL_FEED_ORDERS}/all`));
   }, [dispatch]);
 
+  // для деталей ордера
   const openOrdertDetails = useCallback(
     (value: Order) => {
       dispatch(setOrderDetails(value));

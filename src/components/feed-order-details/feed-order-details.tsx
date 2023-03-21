@@ -1,33 +1,45 @@
-import { useAppSelector } from "../../hooks/useStore";
-import { useParams } from "react-router";
+import orderDetailsStyles from "./order-details.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FormattedDate } from "../../utils/ui/formatted-date";
-import orderDetailsStyles from "./order-details.module.css";
+import { useAppSelector, useAppDispatch } from "../../hooks/useStore";
+import { useParams } from "react-router";
+import { useEffect } from "react";
 import { IngredientType } from "../../utils/types";
+import { getOrderDetails } from "../../services/actions/order-actions";
+import { clearOrderDetails } from "../../services/reducers/order-reducer";
 
 type ParamsType = {
   id: string;
 };
 export const FeedOrderDetails = () => {
-  // все ордеры из store
-  const { orders } = useAppSelector((store) => store.wsOrderReducer);
-  // все ингредиенты из store
-  const { data } = useAppSelector((store) => store.ingredientsReducer);
+  const dispatch = useAppDispatch();
+  // детали ордера из store
+  const { orderDetails } = useAppSelector((store) => store.orderReducer);
   // id - это number ордера
   const { id } = useParams<ParamsType>();
-  const currentOrder = orders.find((el: any) => el.number == id);
-  // console.log(currentOrder)
+  // все ингредиенты из store
+  const { data } = useAppSelector((store) => store.ingredientsReducer);
+
+  useEffect(() => {
+    // получаем данные ордера
+    dispatch(getOrderDetails(id || ""));
+    return () => {
+      // обнуляем данные ордера
+      dispatch(clearOrderDetails());
+    };
+  }, [dispatch, id]);
+
   const status =
-    currentOrder?.status === "created"
+    orderDetails?.status === "created"
       ? "Создан"
-      : currentOrder?.status === "pending"
+      : orderDetails?.status === "pending"
       ? "Готовится"
-      : currentOrder?.status === "done"
+      : orderDetails?.status === "done"
       ? "Выполнен"
-      : currentOrder?.status;
+      : orderDetails?.status;
 
   const ingredients = Array.from(
-    currentOrder?.ingredients.reduce((acc, id) => {
+    orderDetails?.ingredients.reduce((acc, id) => {
       const ingredient = data.find((el) => el._id === id);
       if (ingredient) {
         acc.set(ingredient, (acc.get(ingredient) ?? 0) + 1);
@@ -41,21 +53,20 @@ export const FeedOrderDetails = () => {
     0
   );
 
-  // на время пока ищет нужный элемент
-  if (!currentOrder) return <></>;
+  if (!orderDetails) return <></>;
 
   return (
     <>
       <div className={orderDetailsStyles.wrapper}>
-        <h1 className="text text_type_digits-default">{`#${currentOrder.number}`}</h1>
+        <h1 className="text text_type_digits-default">{`#${orderDetails.number}`}</h1>
         <p className="text text_type_main-medium mt-5 mb-2">
-          {currentOrder.name}
+          {orderDetails.name}
         </p>
         <span className={orderDetailsStyles.status}>{status}</span>
         <div className="mt-8">
           <h2 className="mt-2 mb-4">Состав:</h2>
           <div className={orderDetailsStyles.ingredients}>
-            {currentOrder &&
+            {orderDetails &&
               ingredients.map(([ingredient, count]) => {
                 return (
                   <div className={orderDetailsStyles.ingredientWrapper}>
@@ -81,7 +92,7 @@ export const FeedOrderDetails = () => {
           </div>
           <div className={orderDetailsStyles.info}>
             <div className="text_color_inactive">
-              <FormattedDate date={new Date(currentOrder.createdAt)} />
+              <FormattedDate date={new Date(orderDetails.createdAt)} />
             </div>
             <div className={orderDetailsStyles.orderCardPrice}>
               <span className="text text_type_digits-default">

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "../../utils/constants";
-import { request } from "../../utils/request";
+import { request, checkResponse } from "../../utils/request";
 import { setCookie, getCookie } from "../../utils/utils";
 import { IUserAuth } from "../../utils/types";
 
@@ -13,6 +13,7 @@ const resetPassURL = BASE_URL + "/password-reset"
 const resetPassResetURL = BASE_URL + "/password-reset/reset"
 
 
+// перенести все в types?
 export interface IAuthRequest {
   success: boolean;
   user: IUserAuth;
@@ -44,7 +45,6 @@ export type TResetPass = {
   token?: string | undefined;
 };
 
-
 export const registerRequest = createAsyncThunk(
   `auth/registerRequest`,
   async (body: IRegister) =>
@@ -59,7 +59,7 @@ export const registerRequest = createAsyncThunk(
 
 export const loginRequest = createAsyncThunk(
   `auth/loginRequest`,
-  async (body: ILogin) =>
+  async (body:ILogin) =>
     await request(loginURL, {
       method: "POST",
       headers: {
@@ -80,9 +80,6 @@ export const logoutRequest = createAsyncThunk<IResponseMessage>(
       body: JSON.stringify({ token: getCookie('refreshToken') }),
     })
 )
-const checkResponse = (res: Response) => {
-  return res.ok ? res.json() : res.json().then((err: string) => Promise.reject(err));
-}
 
 const refreshToken = () => {
   return request(refreshTokenURL, {
