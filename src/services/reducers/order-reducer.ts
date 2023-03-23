@@ -48,8 +48,7 @@ export const order = createSlice({
       // детали ордера 
       .addCase(getOrderDetails.fulfilled, (_draft, { payload: { orders } }) => {
         return {
-          orderNumber: null,
-         
+          orderNumber: null,         
           orderDetails: orders.length ? orders[0] : null,       
           error: false,
           loading: false,

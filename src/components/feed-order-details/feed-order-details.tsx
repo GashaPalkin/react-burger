@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { IngredientType } from "../../utils/types";
 import { getOrderDetails } from "../../services/actions/order-actions";
 import { clearOrderDetails } from "../../services/reducers/order-reducer";
+import { OrderIngredient } from "./feed-order-ingredient";
 
 type ParamsType = {
   id: string;
@@ -67,28 +68,13 @@ export const FeedOrderDetails = () => {
           <h2 className="mt-2 mb-4">Состав:</h2>
           <div className={orderDetailsStyles.ingredients}>
             {orderDetails &&
-              ingredients.map(([ingredient, count]) => {
-                return (
-                  <div className={orderDetailsStyles.ingredientWrapper}>
-                    <div>
-                      <div className={orderDetailsStyles.ingredientImg}>
-                        <img src={ingredient.image_mobile} alt=""></img>
-                      </div>
-                      <div>{ingredient.name}</div>
-                    </div>
-                    <div className={orderDetailsStyles.orderCardPrice}>
-                      <span className="text text_type_digits-default">
-                        {count}
-                      </span>
-                      <span className="text text_type_digits-default">X</span>
-                      <span className="text text_type_digits-default">
-                        {ingredient.price}
-                      </span>
-                      <CurrencyIcon type="primary" />
-                    </div>
-                  </div>
-                );
-              })}
+              ingredients.map(([ingredient, count]) => (
+                <OrderIngredient
+                  ingredient={ingredient}
+                  count={count}
+                  key={ingredient._id}
+                />
+              ))}
           </div>
           <div className={orderDetailsStyles.info}>
             <div className="text_color_inactive">

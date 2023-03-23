@@ -59,17 +59,28 @@ function App() {
           <ProfilePage />
         </ProtectedRoute>
 
-        <Route path="/profile/orders" exact={true}>
-          <div className="container centerBlock mt-10">
-            <FeedOrderDetails />
-          </div>
-        </Route>
-
         <Route path="/ingredients/:id" exact={true}>
           <div className="container centerBlock mt-10">
             <IngredientDetails />
           </div>
         </Route>
+
+        <Route path="/feed/:id" exact={true}>
+          <div className="container centerBlock mt-10">
+            <FeedOrderDetails />
+          </div>
+        </Route>
+
+        {/* !!! */}
+        <ProtectedRoute
+          path="/profile/orders/:id"
+          onlyNotAuth={false}
+          exact={true}
+        >
+          <div className="container centerBlock mt-10">
+            <FeedOrderDetails />
+          </div>
+        </ProtectedRoute>
 
         <Route path="/feed">
           <FeedPage />

@@ -1,6 +1,6 @@
 import { useRef, FC, ReactElement } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks/useStore";
 import { moveIngredient } from "../../services/reducers/constructor-reducer";
 import type { Identifier } from "dnd-core";
 
@@ -20,7 +20,7 @@ interface CollectedProps {
 }
 
 export const DragIngridient: FC<DragItemProps> = ({ id, index, children }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement>(null);
 
   const [{ handlerId }, drop] = useDrop<DragObject, undefined, CollectedProps>({

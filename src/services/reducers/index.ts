@@ -29,8 +29,7 @@ import {
   wsError as errorUserOrders
 } from "../actions/ws-user-order-actions";
 
-// ? в пачке написали что можно 2 middleware делать / наверное можно какой то хук сочинить / но пока так
-const wsActions: TwsActionTypes = {
+const wsActions:TwsActionTypes = {
   wsConnect: connectAllOrders,
   wsDisconnect: disconnectAllOrders,
   wsConnecting: connectingAllOrders,
@@ -38,14 +37,16 @@ const wsActions: TwsActionTypes = {
   onClose: closeAllOrders,
   onError: errorAllOrders,
   onMessage: messageAllOrders,
-  // 
-  wsConnectUser: connectUserOrders,
-  wsDisconnectUser: disconnectUserOrders,
-  wsConnectingUser: connectingUserOrders,
-  onOpenUser: openUserOrders,
-  onCloseUser: closeUserOrders,
-  onErrorUser: errorUserOrders,
-  onMessageUser: messageUserOrders,
+};
+
+const wsUserActions:TwsActionTypes = {
+  wsConnect: connectUserOrders,
+  wsDisconnect: disconnectUserOrders,
+  wsConnecting: connectingUserOrders,
+  onOpen: openUserOrders,
+  onClose: closeUserOrders,
+  onError: errorUserOrders,
+  onMessage: messageUserOrders, 
 };
 
 const reducer = {
@@ -59,13 +60,15 @@ const reducer = {
   wsUserOrderReducer
 }
 
+
 const ordersSocketMiddleware = createSocketMiddleware(wsActions);
+const userOrdersSocketMiddleware = createSocketMiddleware(wsUserActions);
 
 export const store = configureStore({
   reducer,
   devTools: process.env.NODE_ENV !== 'production',
   middleware(getDefaultMiddleware) {
-    return getDefaultMiddleware().concat(ordersSocketMiddleware);
+    return getDefaultMiddleware().concat(ordersSocketMiddleware, userOrdersSocketMiddleware )
   },
 })
 

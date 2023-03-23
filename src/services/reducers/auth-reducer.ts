@@ -29,6 +29,7 @@ export const auth = createSlice({
   reducers: {},
   extraReducers: (builder) =>
     builder     
+      // login cases 
       .addCase(loginRequest.fulfilled, (state, { payload: { accessToken, refreshToken, user } }) => {
         setCookie('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);

@@ -10,17 +10,22 @@ interface ProtectedRouteProps {
   exact?: boolean;
 }
 
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+}
+
 export const ProtectedRoute: FC<ProtectedRouteProps> = ({
   onlyNotAuth = false,
   ...rest
 }) => {
   
   const { user } = useAppSelector((store) => store.authReducer);
-  const location = useLocation();
+  const location = useLocation<LocationState>();
 
-  if (onlyNotAuth && user) {
-    const from = location.state || { from: { pathname: "/" } };
-    return <Redirect to={from} />;
+  if (onlyNotAuth && user) {      
+    return <Redirect to={location?.state?.from || "/"} />;
   }
 
   if (!onlyNotAuth && !user) {

@@ -11,22 +11,11 @@ export type TwsActionTypes = {
   onClose: ActionCreatorWithoutPayload,
   onError: ActionCreatorWithPayload<string>,
   onMessage: ActionCreatorWithPayload<any>,
-  // 
-  wsConnectUser: ActionCreatorWithPayload<string>,
-  wsDisconnectUser: ActionCreatorWithoutPayload,
-  wsConnectingUser: ActionCreatorWithoutPayload,
-  onOpenUser: ActionCreatorWithoutPayload,
-  onCloseUser: ActionCreatorWithoutPayload,
-  onErrorUser: ActionCreatorWithPayload<string>,
-  onMessageUser: ActionCreatorWithPayload<any>,
-
 }
 
-export const createSocketMiddleware: any = (wsActions: TwsActionTypes): Middleware<{}, RootState> => {
+export const createSocketMiddleware: any = (Actions: TwsActionTypes): Middleware<{}, RootState> => {
   return (store) => {
     let socket: WebSocket | null = null;
-    let socketUser: WebSocket | null = null;
-
     let isConnected = false;
     let reconnectTimer = 0;
     let url = '';
@@ -42,16 +31,7 @@ export const createSocketMiddleware: any = (wsActions: TwsActionTypes): Middlewa
         onError,
         onMessage,
         wsConnecting,
-        // 
-        wsConnectUser,
-        wsDisconnectUser,
-        onOpenUser,
-        onCloseUser,
-        onErrorUser,
-        onMessageUser,
-        wsConnectingUser,
-
-      } = wsActions;
+      } = Actions;
 
       if (wsConnect.match(action)) {
         console.log('connect')
@@ -67,7 +47,7 @@ export const createSocketMiddleware: any = (wsActions: TwsActionTypes): Middlewa
         };
 
         socket.onerror = err => {
-          console.log('error')
+          // console.log('error')
         };
 
         socket.onmessage = event => {
@@ -78,62 +58,8 @@ export const createSocketMiddleware: any = (wsActions: TwsActionTypes): Middlewa
 
         socket.onclose = event => {
           if (event.code !== 1000) {
-            console.log('error')
+            // console.log('error')
             dispatch(onError(event.code.toString()));
-          }
-          console.log('close')
-          dispatch(onCloseUser());
-
-          if (isConnected) {
-            dispatch(wsConnecting());
-            reconnectTimer = window.setTimeout(() => {
-              dispatch(wsConnectUser(url));
-            }, 3000)
-          }
-        };
-
-        if (wsSendMessage && wsSendMessage.match(action)) {
-          console.log('send')
-          socket.send(JSON.stringify(action.payload));
-        }
-
-        if (wsDisconnect.match(action)) {
-          console.log('disconnect')
-          clearTimeout(reconnectTimer)
-          isConnected = false;
-          reconnectTimer = 0;
-          socket.close();
-          dispatch(onClose());
-        }
-      }
-
-      if (wsConnectUser.match(action)) {
-        console.log('connect')
-        url = action.payload;
-        socketUser = new WebSocket(url);
-        isConnected = true;
-        dispatch(wsConnectingUser());
-      }
-
-      if (socketUser) {
-        socketUser.onopen = () => {
-          dispatch(onOpenUser());
-        };
-
-        socketUser.onerror = err => {
-          console.log('error')
-        };
-
-        socketUser.onmessage = event => {
-          const { data } = event;
-          const parsedData = JSON.parse(data);
-          dispatch(onMessageUser(parsedData));
-        };
-
-        socketUser.onclose = event => {
-          if (event.code !== 1000) {
-            console.log('error')
-            dispatch(onErrorUser(event.code.toString()));
           }
           console.log('close')
           dispatch(onClose());
@@ -147,16 +73,16 @@ export const createSocketMiddleware: any = (wsActions: TwsActionTypes): Middlewa
         };
 
         if (wsSendMessage && wsSendMessage.match(action)) {
-          console.log('send')
-          socketUser.send(JSON.stringify(action.payload));
+          // console.log('send')
+          socket.send(JSON.stringify(action.payload));
         }
 
-        if (wsDisconnectUser.match(action)) {
+        if (wsDisconnect.match(action)) {
           console.log('disconnect')
           clearTimeout(reconnectTimer)
           isConnected = false;
           reconnectTimer = 0;
-          socketUser.close();
+          socket.close();
           dispatch(onClose());
         }
       }

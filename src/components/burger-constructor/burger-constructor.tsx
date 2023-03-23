@@ -19,15 +19,17 @@ import { clearConstructor } from "../../services/reducers/constructor-reducer";
 import { useHistory } from "react-router-dom";
 import { IngredientType } from "../../utils/types";
 
-interface IngredientUUIDType extends IngredientType {
-  uuid: string;
-}
-
 function BurgerConstructor() {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { bun, ingredients } = useAppSelector((store) => store.constructorReducer);
-  const { orderNumber } = useAppSelector((store) => store.orderReducer);
+  const { bun, ingredients } = useAppSelector(
+    (store) => store.constructorReducer
+  );
+
+  // для preloader получить значение loading
+  const { orderNumber, loading } = useAppSelector(
+    (store) => store.orderReducer
+  );
   const { user } = useAppSelector((store) => store.authReducer);
 
   const [{ isHover }, drop] = useDrop(() => ({
@@ -63,7 +65,7 @@ function BurgerConstructor() {
       ...ingredients.map((el: IngredientType) => el._id),
       bun._id,
     ];
-    
+
     if (user) {
       dispatch(sentOrder({ ingredients: INGRIDIENTS }));
       // INGRIDIENTS - массив с ID - тип string
@@ -100,7 +102,7 @@ function BurgerConstructor() {
         <div className={`${constructorStyles.contstructorCenter} `}>
           {/* перебор массива без булок ingredients */}
           {ingredients &&
-            ingredients.map((element: IngredientUUIDType, idx: number) => {
+            ingredients.map((element, idx) => {
               return (
                 <React.Fragment key={element.uuid}>
                   <DragIngridient id={element.uuid} index={idx}>
@@ -150,7 +152,7 @@ function BurgerConstructor() {
           htmlType="button"
           type="primary"
           size="large"
-          // ? двойное отрицание! иначе не работает 
+          // ? двойное отрицание! иначе не работает
           // ? см. https://ru.stackoverflow.com/questions/188946/%D0%94%D0%B2%D0%BE%D0%B9%D0%BD%D0%BE%D0%B5-%D0%BE%D1%82%D1%80%D0%B8%D1%86%D0%B0%D0%BD%D0%B8%D0%B5
           disabled={!!disableButton}
           onClick={getOrderDedails}
@@ -165,6 +167,16 @@ function BurgerConstructor() {
           <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
+
+      {/* preloader */}
+      {loading ? (
+        <div className={`${constructorStyles.load} `}>
+          <hr />
+          <hr />
+          <hr />
+          <hr />
+        </div>
+      ) : null}
     </div>
   );
 }

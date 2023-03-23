@@ -18,7 +18,6 @@ function BurgerIngredients() {
   ];
 
   const [activeTab, setActiveTab] = useState(tabs[0].value);
-
   const categoryRef = useRef<HTMLDivElement>(null);
 
   const tabsSwitch = (value: string) => {
@@ -29,15 +28,13 @@ function BurgerIngredients() {
     }
   };
 
-  const containerRef = useRef<HTMLDivElement>(null);
-
   const tabsScroll = () => {
     const distance = (value: Tab) =>
-      value.ref.current === null || containerRef.current === null
+      value.ref.current === null || categoryRef.current === null
         ? 0
         : Math.abs(
             value.ref.current.getBoundingClientRect().y -
-              containerRef.current.getBoundingClientRect().y
+              categoryRef.current.getBoundingClientRect().y
           );
     const tab = tabs.reduce((acc, value) => {
       return distance(acc) > distance(value) ? value : acc;
