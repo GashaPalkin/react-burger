@@ -1,0 +1,21 @@
+.contentWrap {
+  display: flex;
+  gap: 40px;
+  margin: 0 auto;
+}
+
+.leftSide {
+  display: flex;
+  flex-wrap: wrap;
+  width: 50%;
+  height: calc(100vh - 125px);
+  padding-bottom: 15px;
+  overflow-y: scroll;
+}
+
+.rightSide {
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  width: 50%;
+}

@@ -12,6 +12,7 @@
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.13.5",
+    "plural-ru": "^2.0.2",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
@@ -50,6 +51,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "@types/uuid": "^9.0.1"
   }
 }

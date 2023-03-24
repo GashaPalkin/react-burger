@@ -1,0 +1,64 @@
+a:-webkit-any-link {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+.orderCard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border-radius: 40px;
+  padding: 24px;
+  background: #1C1C21;
+  margin-right: 8px;
+  margin-bottom: 24px;
+}
+
+.orderCardHeader, .orderCardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orderCardIngredients {
+  display: flex;
+}
+
+.ingredientImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  margin-left: -20px;
+  background: linear-gradient(#131316, #131316) padding-box,
+    linear-gradient(to right, #801ab2, #4c4cff) border-box;
+  border: 2px solid transparent;
+  padding: 2px;
+  
+}
+
+.ingredientImg:first-child {
+  margin-left: 0px;
+}
+
+.ingredientImg img {
+  height: 56px;
+}
+
+.ingredientImg span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow: 2px 0px 8px black;
+}
+
+.orderCardPrice {
+  display: flex;
+  justify-self: flex-end;
+  align-items: center;
+  gap: 5px;
+}
