@@ -3,25 +3,34 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  gap: 130px;
+  gap: 100px;
+  width: 100%;
 }
 
 .profileLeftSide {
-  width: 50%;
+  width: 40%;
 }
 
 .profileRightSide {
-  width: 50%;
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  height: calc(100vh - 220px);
+  padding-bottom: 15px;  
+}
+
+.scrollSection {  
+  overflow-y: scroll;
+  height: calc(100vh - 220px);
 }
 
 .profileNav {
   display: flex;
   flex-direction: column; 
   gap: 20px;  
-  text-align: left;
- 
-  
+  text-align: left;  
 }
+
 .profileNav a {
   text-decoration: none;
 }
