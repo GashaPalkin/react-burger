@@ -86,8 +86,11 @@ function BurgerConstructor() {
       ref={drop}
       style={{ borderColor }}
       className={`${constructorStyles.burgerConstructorWrap} pl-4 pr-4 `}
+      data-testid="dropContainer"
     >
-      <>
+      <div
+      data-testid="dropBunTop"
+      >
         {/* верхняя булка bun */}
         {bun && (
           <ConstructorElement
@@ -98,36 +101,43 @@ function BurgerConstructor() {
             type="top"
           />
         )}
+      </div>
 
-        <div className={`${constructorStyles.contstructorCenter} `}>
-          {/* перебор массива без булок ingredients */}
-          {ingredients &&
-            ingredients.map((element, idx) => {
-              return (
-                <React.Fragment key={element.uuid}>
-                  <DragIngridient id={element.uuid} index={idx}>
-                    <div
-                      className={`${constructorStyles.constructorElementCenter} `}
-                    >
-                      <DragIcon type={"primary"} />
-                      <ConstructorElement
-                        isLocked={false}
-                        key={element._id}
-                        text={element.name}
-                        thumbnail={element.image}
-                        price={element.price}
-                        // обязательно handleClose / не onClick
-                        handleClose={() =>
-                          dispatch(deleteIngredient(element.uuid))
-                        }
-                      />
-                    </div>
-                  </DragIngridient>
-                </React.Fragment>
-              );
-            })}
-        </div>
+      <div
+        className={`${constructorStyles.contstructorCenter} `}
+        data-testid="dropIngredients"
+      >
+        {/* перебор массива без булок ingredients */}
+        {ingredients &&
+          ingredients.map((element, idx) => {
+            return (
+              <React.Fragment key={element.uuid}>
+                <DragIngridient id={element.uuid} index={idx}>
+                  <div
+                    className={`${constructorStyles.constructorElementCenter} `}
+                  >
+                    <DragIcon type={"primary"} />
+                    <ConstructorElement
+                      isLocked={false}
+                      key={element._id}
+                      text={element.name}
+                      thumbnail={element.image}
+                      price={element.price}
+                      // обязательно handleClose / не onClick
+                      handleClose={() =>
+                        dispatch(deleteIngredient(element.uuid))
+                      }
+                    />
+                  </div>
+                </DragIngridient>
+              </React.Fragment>
+            );
+          })}
+      </div>
 
+      <div
+        data-testid="dropBunBottom"
+      >
         {/* нижняя булка bun */}
         {bun && (
           <ConstructorElement
@@ -138,7 +148,8 @@ function BurgerConstructor() {
             type="bottom"
           />
         )}
-      </>
+      </div>
+
       <div className={`${constructorStyles.checkout} pt-10 mr-4 `}>
         <div className="totalPrice">
           <span
@@ -156,6 +167,7 @@ function BurgerConstructor() {
           // ? см. https://ru.stackoverflow.com/questions/188946/%D0%94%D0%B2%D0%BE%D0%B9%D0%BD%D0%BE%D0%B5-%D0%BE%D1%82%D1%80%D0%B8%D1%86%D0%B0%D0%BD%D0%B8%D0%B5
           disabled={!!disableButton}
           onClick={getOrderDedails}
+          data-testid="sentOrderButton"
         >
           Оформить заказ
         </Button>

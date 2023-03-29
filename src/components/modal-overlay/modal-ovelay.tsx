@@ -7,11 +7,15 @@ interface ModalOverlayProps {
 }
 
 const ModalOverlay: FC<ModalOverlayProps> = ({ onClose, children }) => {
-  return (   
-    <div className={modalOverlayStyles.fixedOverlay} onClick={onClose}>
+  return (
+    <div
+      className={modalOverlayStyles.fixedOverlay}
+      onClick={onClose}
+      data-testid="overlayClose"
+    >
       {children}
-    </div>   
+    </div>
   );
-}
+};
 
 export default ModalOverlay;

@@ -54,16 +54,16 @@ code {
 
 /* Доп стили для верхней булки */
 .constructor-element_pos_top {
-  width: 508px !important;
+  width: 504px !important;
   align-self: end;
-  margin-right: 25px !important;
+  margin-left: 36px !important;
 }
 
 /* Доп стили для нижней булки  */
 .constructor-element_pos_bottom {
   width: 508px !important;
   align-self: end;
-  margin-right: 25px !important;
+  margin-left: 40px !important;
 }
 
 /* Доп стили для компонента Tabs */

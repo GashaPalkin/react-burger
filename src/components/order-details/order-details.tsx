@@ -8,7 +8,7 @@ interface OrderDetailProps {
 export const OrderDetails: FC<OrderDetailProps> = ({ orderNumber }) => {
   return (
     <>
-      <p className="text text_type_digits-large mt-8">{orderNumber}</p>
+      <p className="text text_type_digits-large mt-8" data-testid='orderNumber'>{orderNumber}</p>
       <p className="text text_type_main-medium mt-8">идентификатор заказа</p>
       <img
         className="m-15"

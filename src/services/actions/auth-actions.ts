@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "../../utils/constants";
 import { request, checkResponse } from "../../utils/request";
 import { setCookie, getCookie } from "../../utils/utils";
-import { IUserAuth } from "../../utils/types";
+import { IAuthRequest, ILogin, IRegister, TUserPatch, IResponseMessage, TResetPass  } from "../../utils/types";
 
 const registerURL = BASE_URL + "/auth/register";
 const loginURL = BASE_URL + "/auth/login";
@@ -11,39 +11,6 @@ const refreshTokenURL = BASE_URL + "/auth/token";
 const userURL = BASE_URL + "/auth/user"
 const resetPassURL = BASE_URL + "/password-reset"
 const resetPassResetURL = BASE_URL + "/password-reset/reset"
-
-
-// перенести все в types?
-export interface IAuthRequest {
-  success: boolean;
-  user: IUserAuth;
-  accessToken: string;
-  refreshToken: string;
-}
-
-export interface ILogin {
-  email: string;
-  password: string;
-}
-
-export interface IRegister extends ILogin {
-  name: string;
-}
-
-export type TUserPatch = {
-  email?: string | undefined;
-  password?: string | undefined;
-  name?: string | undefined;
-};
-
-export interface IResponseMessage {
-  message: string;
-}
-
-export type TResetPass = {
-  password?: string | undefined;
-  token?: string | undefined;
-};
 
 export const registerRequest = createAsyncThunk(
   `auth/registerRequest`,
@@ -101,7 +68,7 @@ const fetchWithRefresh = async (url: string, options: RequestInit | undefined | 
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
-      localStorage.setItem('refreshToken', refreshData.refreshToken);
+      setCookie('refreshToken', refreshData.refreshToken);      
       setCookie('accessToken', refreshData.accessToken);
       options.headers.authorization = refreshData.accessToken;
       const response = await fetch(url, options);

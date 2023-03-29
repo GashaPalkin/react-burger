@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { sentOrder, getOrderDetails } from "../actions/order-actions";
-import {Order} from "../../utils/types"
+import { Order } from "../../utils/types"
 
 interface OrderStore {
   orderNumber: number | null;
@@ -9,7 +9,7 @@ interface OrderStore {
   error: boolean;
 }
 
-const initialState: OrderStore = {
+export const initialState: OrderStore = {
   orderNumber: null,
   orderDetails: null,
   loading: false,
@@ -25,22 +25,22 @@ export const order = createSlice({
     },
     clearOrderDetails() {
       return { ...initialState }
-    }   
+    }
   },
   extraReducers: (builder) =>
     builder
       .addCase(sentOrder.fulfilled, (_draft, { payload }) => {
-          return {
-            orderNumber: payload.order.number,
-            orderDetails: null,
-            error: false,
-            loading: false,
-          };
-        }
+        return {
+          orderNumber: payload.order.number,
+          orderDetails: null,
+          error: false,
+          loading: false,
+        };
+      }
       )
       .addCase(sentOrder.rejected, (state, action) => {
         state.error = true
-        console.log(action.error)
+        // console.log(action.error)
       })
       .addCase(sentOrder.pending, (state) => {
         state.loading = true
@@ -48,12 +48,12 @@ export const order = createSlice({
       // детали ордера 
       .addCase(getOrderDetails.fulfilled, (_draft, { payload: { orders } }) => {
         return {
-          orderNumber: null,         
-          orderDetails: orders.length ? orders[0] : null,       
+          orderNumber: null,
+          orderDetails: orders.length ? orders[0] : null,
           error: false,
           loading: false,
         };
-      })   
+      })
       .addCase(getOrderDetails.pending, (state) => {
         state.loading = true;
         state.error = false;
