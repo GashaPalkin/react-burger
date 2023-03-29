@@ -36,10 +36,13 @@ const Modal: FC<ModalProps> = ({ title, onClose, children }) => {
       <div
         className={`${modalStyles.modal} pt-15 pb-15 pl-10 pr-10 `}
         onClick={stopPropagation}
+        data-testid="modal"
       >
         <div className={`${modalStyles.modalTitle}`}>
           <h3 className="text text_type_main-large">{title}</h3>
-          <CloseIcon onClick={onClose} type={"primary"} />
+          <div data-testid="closeModal">
+            <CloseIcon onClick={onClose} type={"primary"} />
+          </div>
         </div>
         <div className={`${modalStyles.modalContent} `}>{children}</div>
       </div>

@@ -45,14 +45,27 @@ function App() {
         <ProtectedRoute onlyNotAuth={true} path="/register" exact={true}>
           <RegisterPage />
         </ProtectedRoute>
+
         <ProtectedRoute onlyNotAuth={true} path="/login" exact={true}>
           <LoginPage />
         </ProtectedRoute>
+
         <ProtectedRoute onlyNotAuth={true} path="/forgot-password" exact={true}>
           <ForgotPasswordPage />
         </ProtectedRoute>
+
         <ProtectedRoute onlyNotAuth={true} path="/reset-password" exact={true}>
           <ResetPasswordPage />
+        </ProtectedRoute>
+
+        <ProtectedRoute
+          path="/profile/orders/:id"
+          onlyNotAuth={false}
+          exact={true}
+        >
+          <div className="container centerBlock mt-10">
+            <FeedOrderDetails />
+          </div>
         </ProtectedRoute>
 
         <ProtectedRoute path="/profile" onlyNotAuth={false}>
@@ -71,20 +84,10 @@ function App() {
           </div>
         </Route>
 
-        {/* !!! */}
-        <ProtectedRoute
-          path="/profile/orders/:id"
-          onlyNotAuth={false}
-          exact={true}
-        >
-          <div className="container centerBlock mt-10">
-            <FeedOrderDetails />
-          </div>
-        </ProtectedRoute>
-
         <Route path="/feed">
           <FeedPage />
         </Route>
+
         <Route>
           <PageNotFound />
         </Route>

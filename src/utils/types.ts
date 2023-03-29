@@ -24,6 +24,37 @@ export interface IUserAuth {
   email: string;
 }
 
+export interface ILogin {
+  email: string;
+  password: string;
+}
+
+export interface IRegister extends ILogin {
+  name: string;
+}
+
+export interface IAuthRequest {
+  success: boolean;
+  user: IUserAuth;
+  accessToken: string;
+  refreshToken: string;
+}
+
+export type TUserPatch = {
+  email?: string | undefined;
+  password?: string | undefined;
+  name?: string | undefined;
+};
+
+export interface IResponseMessage {
+  message: string;
+}
+
+export type TResetPass = {
+  password?: string | undefined;
+  token?: string | undefined;
+};
+
 export type Order = {
   ingredients: string[]
   name: string,

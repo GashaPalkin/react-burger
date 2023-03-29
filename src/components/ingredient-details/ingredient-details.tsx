@@ -16,7 +16,10 @@ export const IngredientDetails = () => {
   return (
     <div className={`${ingredientsStyles.detailWrapper} `}>
       <img src={currentIngredient.image_large} alt={currentIngredient.name} />
-      <p className="text text_type_main-medium mt-4">
+      <p
+        className="text text_type_main-medium mt-4"
+        data-testid="ingredientName"
+      >
         {currentIngredient.name}
       </p>
       <div className={`${ingredientsStyles.nutrients} flexRow mt-8`}>

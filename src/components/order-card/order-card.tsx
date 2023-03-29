@@ -8,10 +8,9 @@ import { Order } from "../../utils/types";
 
 interface ElementProps {
   element: Order;
-  onClick: () => void;
 }
 
-export const OrderCard: FC<ElementProps> = ({ element, onClick }) => {
+export const OrderCard: FC<ElementProps> = ({ element }) => {
   const location = useLocation();
   const { path } = useRouteMatch();
   // деструктуризация данных из element
@@ -38,7 +37,7 @@ export const OrderCard: FC<ElementProps> = ({ element, onClick }) => {
       }}
     >
       <div className="container">
-        <div className={`${orderCardStyles.orderCard} `} onClick={onClick}>
+        <div className={`${orderCardStyles.orderCard} `} >
           <div className={`${orderCardStyles.orderCardHeader} `}>
             <div
               className={`${orderCardStyles.orderCardNumber} text text_type_digits-default `}
