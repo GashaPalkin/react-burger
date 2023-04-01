@@ -12,7 +12,7 @@ interface IAuthState {
   isAuthChecked: boolean;
 }
 
-const initialState: IAuthState = {
+export const initialState: IAuthState = {
   user: null,
   loading: false,
   error: false,
@@ -24,11 +24,9 @@ const initialState: IAuthState = {
 export const auth = createSlice({
   name: 'auth',
   initialState,
-  // стандартная логика редуктора с авто-генерируемыми типами операции для каждого редуктора
-  // см. https://reactdev.ru/libs/redux-toolkit/#createasyncthunk    
   reducers: {},
   extraReducers: (builder) =>
-    builder     
+    builder
       // login cases 
       .addCase(loginRequest.fulfilled, (state, { payload: { accessToken, refreshToken, user } }) => {
         setCookie('accessToken', accessToken);
@@ -38,7 +36,7 @@ export const auth = createSlice({
       })
       .addCase(loginRequest.rejected, (state, action) => {
         state.error = true
-        console.log(action.error)
+        // console.log(action.error)
       })
       .addCase(loginRequest.pending, (state) => {
         state.loading = true
@@ -53,11 +51,13 @@ export const auth = createSlice({
       })
       .addCase(registerRequest.rejected, (state, action) => {
         state.error = true
-        console.log(action.error)
+        // console.log(action.error)
       })
       .addCase(registerRequest.pending, (state) => {
         state.loading = true
-      })  
+      })
+
+      // logout cases  
       .addCase(logoutRequest.fulfilled, () => {
         deleteCookie('accessToken');
         localStorage.removeItem('refreshToken');
@@ -65,23 +65,25 @@ export const auth = createSlice({
       })
       .addCase(logoutRequest.rejected, (state, action) => {
         state.error = true
-        console.log(action.error)
+        // console.log(action.error)
       })
       .addCase(logoutRequest.pending, (state) => {
         state.loading = true
       })
-      
+
+      // getUserRequest cases  
       .addCase(getUserRequest.fulfilled, (state, { payload: { user } }) => {
         state.user = user;
         state.loading = false;
       })
       .addCase(getUserRequest.rejected, (state) => {
-        state.error = true        
+        state.error = true
         state.isAuthChecked = true
       })
       .addCase(getUserRequest.pending, (state) => {
         state.loading = true
       })
+
       // userPatch cases
       .addCase(userPatchRequest.fulfilled, (state, { payload: { user } }) => {
         state.user = user;
@@ -98,6 +100,7 @@ export const auth = createSlice({
       .addCase(userPatchRequest.pending, (state) => {
         state.loading = true
       })
+
       // reset password request cases
       .addCase(resetPasswordRequest.fulfilled, (state) => {
         state.sentResetSuccess = true;
@@ -106,13 +109,13 @@ export const auth = createSlice({
       .addCase(resetPasswordRequest.rejected, (state, action) => {
         state.sentResetSuccess = false
         state.error = true
-        console.log(action.error)
+        // console.log(action.error)
       })
       .addCase(resetPasswordRequest.pending, (state) => {
         state.sentResetSuccess = false
         state.loading = true
       })
-    
+
       // reset password cases
       .addCase(resetPassword.fulfilled, (state) => {
         state.resetPassDone = true;
@@ -121,7 +124,7 @@ export const auth = createSlice({
       .addCase(resetPassword.rejected, (state, action) => {
         state.resetPassDone = false
         state.error = true
-        console.log(action.error)
+        // console.log(action.error)
       })
       .addCase(resetPassword.pending, (state) => {
         state.resetPassDone = false

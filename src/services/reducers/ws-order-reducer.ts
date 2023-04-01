@@ -10,7 +10,7 @@ type TInitialOrdersState = {
   totalToday: number
 }
 
-const initialState: TInitialOrdersState = {
+export const initialState: TInitialOrdersState = {
   status: WebSocketStatus.OFFLINE,
   connectionError: '',
   orders: [],

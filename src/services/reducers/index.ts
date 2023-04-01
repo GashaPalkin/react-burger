@@ -3,7 +3,6 @@ import { ingredientsReducer } from "./ingredients-reducer";
 import { constructorReducer } from "./constructor-reducer";
 import { orderReducer } from "./order-reducer";
 import { ingredientDetailsReducer } from "./ingredient-details-reducer";
-import { orderDetailsReducer } from "../../services/reducers/order-details-reducer";
 import { authReducer } from "./auth-reducer";
 import { wsOrderReducer } from "./ws-order-reducer";
 import { wsUserOrderReducer } from "./ws-user-order-reducer";
@@ -53,8 +52,7 @@ const reducer = {
   ingredientsReducer,
   constructorReducer,
   orderReducer,
-  ingredientDetailsReducer,
-  orderDetailsReducer,
+  ingredientDetailsReducer, 
   authReducer,
   wsOrderReducer,
   wsUserOrderReducer

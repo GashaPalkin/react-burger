@@ -60,6 +60,7 @@ function BurgerIngredients() {
         className={`${ingredientsStyles.ingredientCards} `}
         ref={categoryRef}
         onScroll={tabsScroll}
+        data-testid='ingredients'
       >
         {categories}
       </div>

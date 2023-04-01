@@ -44,7 +44,7 @@ export const LoginPage = () => {
       <h1 className="text text_type_main-medium mb-1">Вход</h1>
       <EmailInput value={email} name="email" onChange={handleChange} />
       <PasswordInput value={password} name="password" onChange={handleChange} />
-      <Button htmlType="submit">Войти</Button>
+      <Button htmlType="submit" data-testid="testLogin">Войти</Button>
       <div className="text_type_main-default text_color_inactive mt-8">
         Вы новый пользователь?{" "}
         <span>
