@@ -1,7 +1,9 @@
-describe('service is available', function() {
+import { testUrl } from '../../src/utils/constants'
 
-  it('should be available on localhost:3000', function() {
-    cy.visit('http://localhost:3000');
+describe('service is available', function () {
+
+  it('should be available on localhost:3000', function () {
+    cy.visit(testUrl);
   });
-  
+
 }); 

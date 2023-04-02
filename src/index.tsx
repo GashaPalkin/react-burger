@@ -6,7 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { BrowserRouter } from "react-router-dom";
+// import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
 import { store } from "./services/reducers";
 
@@ -15,7 +16,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <BrowserRouter>
+  <HashRouter>
     <React.StrictMode>
       <DndProvider backend={HTML5Backend}>
         <Provider store={store}>
@@ -23,7 +24,7 @@ root.render(
         </Provider>
       </DndProvider>
     </React.StrictMode>
-  </BrowserRouter>
+  </HashRouter>
 );
 
 reportWebVitals();
